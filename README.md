@@ -1,20 +1,23 @@
 # TRIKAAL Character Studio
 
-Zero-budget, mobile-first Indian character creator prototype.
+Zero-budget, mobile-first 3D human character creator.
 
-## Open the app
-Enable GitHub Pages in repository Settings → Pages → Deploy from branch → main → / (root). Then open the published Pages URL.
+**Website:** https://ravime0099-arch.github.io/TRIKAAL-Character-Studio/
 
-## Current alpha features
-- Touch-friendly 3D preview (Three.js via CDN)
-- Male/female base silhouette
-- Skin, hair and eye colors; height/build/face-width sliders
-- Indian outfit categories: kurta, sherwani, dhoti, saree, lehenga, salwar
-- Drape, jewellery, facial hair and footwear options
-- Local save/load, JSON settings export and PNG preview capture
+## Current integration
+The repository now contains an automated build that self-hosts the open-source Ara 3D Gen character editor under `/editor/` on this same GitHub Pages site. It fetches the CC0 MakeHuman source assets, builds the full app, and publishes the generated static site. No paid hosting or Supabase project is used.
 
-## Honest status
-This is an early procedural 3D prototype, not a photorealistic human creator. It does not yet include realistic human meshes, detailed garment geometry, rigging, animation, or GLB export. The current preview is a basic stylized mannequin. Detailed licensed assets and a production rig pipeline are later milestones.
+The full builder provides detailed body and face morph controls, skin/hair choices, its available clothes/accessories, rigging, animation and GLB/FBX/OBJ export. Character parameters can be saved and reopened as JSON.
 
-## Device notes
-Designed for modern mobile browsers with WebGL support. Internet is required to load Three.js from jsDelivr.
+## TRIKAAL-specific Indian features
+The requested custom Indian asset pack is a separate modelling/fitting task, not an already-complete feature. It includes:
+- Female and male character presets and appearance variations.
+- Sari: fabric, colour, border, pallu and pleats; blouse neckline, sleeves, length and fit.
+- Lehenga-choli, salwar-kameez, dhoti, kurta, sherwani and Rajputi attire.
+- Turban/safa, hairstyles, jewellery, makeup and accessories.
+- Fine controls for height, weight, shoulders, chest, waist, hips, arms, legs, thighs, calves, neck, fingers, muscles, face, skin tone/texture and age.
+
+These garments/accessories must be created as compatible 3D assets and fitted to the human rig before they can honestly be called available in the editor. The upstream neutral body does not contain detailed genital anatomy.
+
+## Separation
+This repository is independent of Sahitya-gram and the separate TRIKAAL game project.
