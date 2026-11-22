@@ -1,22 +1,23 @@
 # TRIKAAL Character Studio
 
-A zero-budget, mobile-first character creator hosted on GitHub Pages.
+Zero-budget, mobile-first Indian 3D character studio.
 
-## Website
-https://ravime0099-arch.github.io/TRIKAAL-Character-Studio/
+Website: https://ravime0099-arch.github.io/TRIKAAL-Character-Studio/
 
-## Build architecture
-- The public site is built from the open-source Ara 3D Gen project (MIT).
-- Human base data and system assets are fetched by the upstream setup process from MakeHuman Community (CC0).
-- The full builder is published under `/editor/`; this is not the old embedded preview.
-- The deployment workflow builds the upstream source and publishes its static output to the repository's Pages branch source.
+## Current foundation
+The /editor/ build uses the open-source Ara 3D Gen human mesh editor as its underlying engine, self-hosted on this TRIKAAL GitHub Pages site. The editor shell is being rebranded as TRIKAAL. The base engine provides human body/face morphs, materials, available garments, rigging, animation and model export. It is not yet a fully custom Indian character system.
 
-## Build requirements
-Node.js 20+ (the upstream project currently uses modern Vite/TypeScript), pnpm, and internet access for the one-time CC0 asset download. GitHub Actions performs this build; no paid hosting or Supabase project is required.
+## TRIKAAL Indian development scope
+The project will progressively add real, rig-compatible Indian assets and controls:
+- Face and appearance presets reflecting India's regional diversity, with detailed controls for eyes, brows, nose, lips, jaw, cheeks, forehead, ears, skin tone and hair.
+- Fine body proportions: height, shoulders, chest, waist, abdomen, hips, arms, hands, fingers, thighs, knees, calves and feet.
+- Saree construction and drape, blouse neckline/sleeves/fit, lehenga-choli, salwar-kameez, dhoti, kurta, sherwani and regional/Rajputi clothing.
+- Turban/safa, hairstyles, bindi, nath, earrings, necklaces, bangles, bajuband, kamarband, anklets and makeup.
+- Multiple named character saves and editable project files; GLB export for game engines.
 
-## Current scope and honest limitations
-The upstream editor supplies detailed human body/face morph controls, skin/hair options, clothing/accessories available in its catalogue, rigging, animation, and GLB/FBX/OBJ export. Character settings can be saved/opened as JSON.
+These features require actual 3D meshes, textures/materials, rig fitting and tested controls. Listing a garment in the roadmap does not mean its 3D asset already exists. The upstream neutral human base does not include detailed genital anatomy.
 
-TRIKAAL-specific Indian 3D assets are a separate asset-development task. The requested sari and blouse construction controls, lehenga-choli, salwar-kameez, dhoti, kurta, sherwani, Rajputi garments, turbans/safa, Indian jewellery and makeup are not made available merely by listing them; each garment/accessory needs a compatible 3D asset, fitting, materials and validation. The upstream neutral base does not include detailed genital anatomy.
+## Build
+GitHub Actions clones the upstream open-source editor, downloads its CC0 MakeHuman assets, builds it, applies the TRIKAAL editor branding, and publishes the static output. No paid service or Supabase project is used.
 
 This repository is independent of Sahitya-gram and the separate TRIKAAL game project.
