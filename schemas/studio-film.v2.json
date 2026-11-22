@@ -2249,6 +2249,10 @@
         "preset": {
           "type": "string",
           "enum": [
+            "TRIKAAL — भारतीय उत्सवी परिधान",
+            "TRIKAAL — भारतीय लहँगा प्रेरित",
+            "TRIKAAL — भारतीय कुर्ता पायजामा",
+            "TRIKAAL — भारतीय धोती अंगवस्त्रम",
             "The Resort Guest",
             "The Lifeguard",
             "The Paramedic",
@@ -2510,6 +2514,10 @@
           "preset": {
             "type": "string",
             "enum": [
+              "TRIKAAL — भारतीय उत्सवी परिधान",
+              "TRIKAAL — भारतीय लहँगा प्रेरित",
+              "TRIKAAL — भारतीय कुर्ता पायजामा",
+              "TRIKAAL — भारतीय धोती अंगवस्त्रम",
               "The Resort Guest",
               "The Lifeguard",
               "The Paramedic",

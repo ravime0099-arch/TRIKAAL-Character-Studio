@@ -1,0 +1,1 @@
+import{t as e}from"./params-B6NS7JW_.js";import{o as t}from"./character-assist-CPE6PwZI.js";function n(e){return JSON.stringify({kind:`ara-character`,version:1,params:e},null,2)}function r(n,r){return t(n,r,e)}function i(e){return(e.trim().replace(/[^a-zA-Z0-9_-]+/g,`-`).replace(/^-|-$/g,``)||`character`)+`.ara-character.json`}export{i as n,r,n as t};
