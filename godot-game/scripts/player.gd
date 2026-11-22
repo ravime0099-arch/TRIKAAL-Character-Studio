@@ -25,6 +25,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.y = 0.0
 	move_and_slide()
+	global_position.x = clampf(global_position.x, -25.0, 25.0)
+	global_position.z = clampf(global_position.z, -25.0, 25.0)
 
 func _build_character() -> void:
 	var collider := CollisionShape3D.new()
