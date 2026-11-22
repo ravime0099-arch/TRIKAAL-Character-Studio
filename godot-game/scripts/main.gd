@@ -94,6 +94,7 @@ func _build_ui() -> void:
 	add_child(layer)
 	var root := Control.new()
 	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	root.process_mode = Node.PROCESS_MODE_ALWAYS
 	layer.add_child(root)
 	title_label = Label.new()
 	title_label.text = "TRIKAAL — THE ROYAL BEGINNING"
@@ -145,7 +146,7 @@ func _build_ui() -> void:
 	start.pressed.connect(_start_game)
 	column.add_child(start)
 	pause_panel = PanelContainer.new()
-	pause_panel.position = Vector2(0.5, 0.5)
+	pause_panel.position = Vector2(0, 0.5)
 	pause_panel.set_anchors_preset(Control.PRESET_CENTER)
 	pause_panel.custom_minimum_size = Vector2(260, 150)
 	pause_panel.hide()
