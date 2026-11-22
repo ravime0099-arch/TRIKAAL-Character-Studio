@@ -1,0 +1,64 @@
+name: Ara engine build test
+
+on:
+  push:
+    branches:
+      - integration/ara-engine-review
+    paths:
+      - ".github/workflows/ara-engine-build.yml"
+      - "docs/ARA_ENGINE_REVIEW.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ara-engine-build
+  cancel-in-progress: true
+
+jobs:
+  build-ara:
+    name: Build Ara as a TRIKAAL sub-app
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out TRIKAAL integration branch
+        uses: actions/checkout@v4
+        with:
+          ref: integration/ara-engine-review
+
+      - name: Check out Ara source
+        uses: actions/checkout@v4
+        with:
+          repository: TuriaArt/3d-gen-TU
+          ref: main
+          path: ara-source
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ara-source/package-lock.json
+
+      - name: Install Ara dependencies
+        working-directory: ara-source
+        run: npm ci
+
+      - name: Download and build CC0 MakeHuman assets
+        working-directory: ara-source
+        run: npm run setup-assets
+
+      - name: Build for the TRIKAAL GitHub Pages sub-path
+        working-directory: ara-source
+        env:
+          BASE_PATH: /TRIKAAL-Character-Studio/ara/
+        run: npm run build
+
+      - name: Upload isolated Ara build for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: trikaal-ara-static-build
+          path: ara-source/dist/
+          if-no-files-found: error
+          retention-days: 7
