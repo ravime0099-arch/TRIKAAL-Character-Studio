@@ -1,0 +1,59 @@
+name: Build and publish TRIKAAL Character Studio
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site-src/**'
+      - '.github/workflows/build-publish.yml'
+      - 'indian-character-pack/**'
+      - 'README.md'
+      - 'legacy-preview.html'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout TRIKAAL
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Enable pnpm
+        run: corepack enable
+      - name: Clone the open-source human editor
+        run: git clone --depth 1 https://github.com/olatunde85/3d-gen.git ara-source
+      - name: Install editor dependencies
+        working-directory: ara-source
+        run: pnpm install --frozen-lockfile
+      - name: Download and build CC0 human assets
+        working-directory: ara-source
+        run: pnpm run setup-assets
+      - name: Build full editor for this GitHub Pages path
+        working-directory: ara-source
+        env:
+          BASE_PATH: /TRIKAAL-Character-Studio/
+          ARA_SKIP_MEDIA: '1'
+        run: pnpm run build
+      - name: Assemble TRIKAAL website and full editor
+        run: |
+          mkdir -p ara-source/dist/editor
+          cp -a ara-source/dist/app/. ara-source/dist/editor/
+          cp -a site-src/. ara-source/dist/
+          rsync -a --delete --exclude='.git/' --exclude='.github/' --exclude='site-src/' --exclude='legacy-preview.html' --exclude='indian-character-pack/' ara-source/dist/ ./
+      - name: Publish generated site to GitHub Pages branch source
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No generated site changes."
+          else
+            git commit -m "Build and publish full TRIKAAL editor [skip ci]"
+            git push origin HEAD:main
+          fi
