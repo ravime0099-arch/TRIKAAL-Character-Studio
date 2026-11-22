@@ -49,5 +49,7 @@ jobs:
             echo "No game build changes."
           else
             git commit -m "Publish playable TRIKAAL web game"
-            git push origin HEAD:main
+            git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
           fi
