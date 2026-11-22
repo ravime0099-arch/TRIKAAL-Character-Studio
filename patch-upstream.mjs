@@ -81,5 +81,25 @@ if (!quick.includes("id: 'trikaal_kurta'")) {
   quick = quick.replace(styleAnchor, indianStyles + styleAnchor);
 }
 fs.writeFileSync(paramsFile, params);
+
+const jewelleryMarker = "export const JEWELLERY: Option[] = [";
+const jewelleryLabels = `const trikaalJewelleryLabels: Record<string, string> = {
+  gold_necklace: 'Traditional gold haar',
+  gold_chains: 'Layered gold chains',
+  pearl_necklace: 'Pearl haar',
+  fine_pendant: 'Pendant / mangalsutra-style chain',
+  bangles: 'Choodiyan / bangles',
+  gold_ring: 'Gold ring',
+  cuban_chain: 'Heavy gold chain',
+};
+`;
+if (!quick.includes('trikaalJewelleryLabels')) {
+  quick = quick.replace(jewelleryMarker, jewelleryLabels + jewelleryMarker);
+  quick = quick.replace(
+    "].map((id) => ({ id, label: garmentById.get(id)?.label.replace(/ \\(.*\\)$/, '') ?? id }));",
+    "].map((id) => ({ id, label: trikaalJewelleryLabels[id] ?? garmentById.get(id)?.label.replace(/ \\(.*\\)$/, '') ?? id }));"
+  );
+}
+
 fs.writeFileSync(quickFile, quick);
 console.log('TRIKAAL Indian presets and Quick-build styles patched.');
