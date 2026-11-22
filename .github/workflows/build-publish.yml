@@ -45,7 +45,7 @@ jobs:
           mkdir -p ara-source/dist/editor
           cp -a ara-source/dist/app/. ara-source/dist/editor/
           cp -a site-src/. ara-source/dist/
-          rsync -a --delete --exclude='.git/' --exclude='.github/' --exclude='site-src/' --exclude='legacy-preview.html' --exclude='README.md' --exclude='indian-character-pack/' ara-source/dist/ ./
+          rsync -a --delete --exclude='.git/' --exclude='.github/' --exclude='site-src/' --exclude='legacy-preview.html' --exclude='README.md' --exclude='indian-character-pack/' --exclude='ara-source/' ara-source/dist/ ./
       - name: Publish generated site to GitHub Pages branch source
         run: |
           git config user.name "github-actions[bot]"
