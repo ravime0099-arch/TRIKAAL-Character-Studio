@@ -1,0 +1,87 @@
+name: Publish TRIKAAL character studio preview
+
+on:
+  push:
+    branches:
+      - integration/ara-engine-review
+    paths:
+      - ".github/workflows/ara-engine-publish.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: trikaal-ara-publish
+  cancel-in-progress: false
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out the existing live website
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: site
+          fetch-depth: 0
+
+      - name: Check out Ara source for the owned TRIKAAL build
+        uses: actions/checkout@v4
+        with:
+          repository: TuriaArt/3d-gen-TU
+          ref: main
+          path: ara-source
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ara-source/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ara-source
+        run: npm ci
+
+      - name: Prepare model assets
+        working-directory: ara-source
+        run: npm run setup-assets
+
+      - name: Build for the TRIKAAL website path
+        working-directory: ara-source
+        env:
+          BASE_PATH: /TRIKAAL-Character-Studio/ara/
+        run: npm run build
+
+      - name: Add the app under the existing website without replacing its homepage
+        run: |
+          mkdir -p site/ara
+          cp -a ara-source/dist/. site/ara/
+          cat > site/ara/index.html <<'EOF'
+          <!doctype html>
+          <html lang="hi">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta http-equiv="refresh" content="0; url=./app/">
+            <title>TRIKAAL Character Studio</title>
+            <script>location.replace('./app/' + location.search + location.hash);</script>
+          </head>
+          <body><p>TRIKAAL Character Studio खुल रहा है… <a href="./app/">यहाँ टैप करें</a></p></body>
+          </html>
+          EOF
+
+      - name: Publish only the new /ara app folder to the existing Pages branch
+        working-directory: site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ara
+          if git diff --cached --quiet; then
+            echo "No changes to publish."
+            exit 0
+          fi
+          git commit -m "Publish TRIKAAL character studio under /ara"
+          git push origin HEAD:main
