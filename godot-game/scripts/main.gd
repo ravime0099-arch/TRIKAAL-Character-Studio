@@ -2,6 +2,7 @@ extends Node3D
 
 const PlayerScript = preload("res://scripts/player.gd")
 var player: CharacterBody3D
+var follow_camera: Camera3D
 var started := false
 var selected_character := 0
 var character_ids := ["ref-p01","ref-p02","ref-p03","ref-p04","ref-p05","ref-p06","ref-p07","ref-p08","ref-p09","ref-p10","ref-p11-a","ref-p11-b","ref-p12","ref-p13","ref-p14-a","ref-p14-b","ref-p14-c","ref-p15-a","ref-p15-b","ref-p15-c","ref-p16","ref-p17","ref-p18","ref-p19-a","ref-p19-b","ref-p20","ref-p21","ref-p22-a","ref-p22-b","ref-p22-c","ref-p23"]
@@ -13,6 +14,12 @@ var start_panel: PanelContainer
 func _ready() -> void:
 	_build_world()
 	_build_ui()
+
+func _process(delta: float) -> void:
+	if started and is_instance_valid(player) and is_instance_valid(follow_camera):
+		var target := player.global_position + Vector3(0, 4.4, 7.5)
+		follow_camera.global_position = follow_camera.global_position.lerp(target, min(1.0, delta * 4.0))
+		follow_camera.look_at(player.global_position + Vector3(0, 1.0, 0), Vector3.UP)
 
 func _build_world() -> void:
 	var world_env := WorldEnvironment.new()
@@ -46,11 +53,11 @@ func _build_world() -> void:
 	floor_shape.position.y = -0.1
 	floor_body.add_child(floor_shape)
 	add_child(floor_body)
-	var camera := Camera3D.new()
-	camera.position = Vector3(0, 4.4, 7.5)
-	camera.rotation_degrees = Vector3(-22, 0, 0)
-	camera.current = true
-	add_child(camera)
+	follow_camera = Camera3D.new()
+	follow_camera.position = Vector3(0, 4.4, 7.5)
+	follow_camera.rotation_degrees = Vector3(-22, 0, 0)
+	follow_camera.current = true
+	add_child(follow_camera)
 	var stage := MeshInstance3D.new()
 	var disc := CylinderMesh.new()
 	disc.top_radius = 2.2
@@ -146,4 +153,4 @@ func _start_game() -> void:
 	player.name = "PlayerCharacter"
 	player.position = Vector3(0, 0.2, 0)
 	add_child(player)
-	status_label.text = "खेल शुरू! " + character_names[selected_character] + " · " + character_ids[selected_character]
+	status_label.text = "खेल शुरू! " + character_names[selected_character] + " · " + character_ids[selected_character] + " · कैमरा खिलाड़ी के साथ चलेगा"
