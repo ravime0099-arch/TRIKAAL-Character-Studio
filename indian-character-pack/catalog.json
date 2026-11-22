@@ -1,0 +1,39 @@
+{
+  "pack": "TRIKAAL Indian Character Pack",
+  "version": "0.1.0",
+  "status": "alpha",
+  "languages": [
+    "hi",
+    "en"
+  ],
+  "outfits": {
+    "male": [
+      "kurta",
+      "sherwani",
+      "dhoti"
+    ],
+    "female": [
+      "saree",
+      "lehenga",
+      "salwar"
+    ]
+  },
+  "features": [
+    "skin-color",
+    "hair-color",
+    "eye-color",
+    "body-height",
+    "body-build",
+    "face-width",
+    "facial-hair",
+    "drape",
+    "jewellery",
+    "mojari"
+  ],
+  "limitations": [
+    "procedural-preview-meshes",
+    "no-photorealistic-face-assets",
+    "no-production-rig",
+    "no-glb-export-yet"
+  ]
+}
