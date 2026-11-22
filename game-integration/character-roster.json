@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "project": "TRIKAAL",
+  "source": "नननवधनन-compressed.pdf",
+  "source_pages": 23,
+  "usage": "Visual reference index only. These entries are not completed 3D meshes.",
+  "content_rules": "Treat all depicted people as fictional adults. Adapt outfits as non-explicit, game-appropriate Indian clothing. Do not reproduce nudity or explicit sexual anatomy.",
+  "entries": [
+    {
+      "id": "ref-p01",
+      "page": 1,
+      "group": "solo",
+      "look": "हल्दी-पीली कढ़ाईदार साड़ी, छोटी बाँहों का ब्लाउज, सुनहरे हार, झुमके, चूड़ियाँ, मेहंदी और गजरा",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p02",
+      "page": 2,
+      "group": "solo",
+      "look": "मैरून-लाल राजसी लहँगा-प्रेरित परिधान, सुनहरे-हरे आभूषण, दुपट्टा और फूलों वाली चोटी",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p03",
+      "page": 3,
+      "group": "solo",
+      "look": "बैंगनी पारंपरिक ड्रेप, भारी कुंदन-जैसा हार और जूड़ा/फूल",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p04",
+      "page": 4,
+      "group": "solo",
+      "look": "आइवरी-सुनहरा कढ़ाईदार लहँगा-प्रेरित सेट, हल्का घूँघट और बहुस्तरीय आभूषण",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p05",
+      "page": 5,
+      "group": "solo",
+      "look": "रजत रंग का राजसी शाम का परिधान, महीन कढ़ाई, दुपट्टा और चाँदी के आभूषण",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p06",
+      "page": 6,
+      "group": "solo",
+      "look": "आइवरी-सिल्वर कढ़ाईदार दुपट्टा और पारंपरिक आभूषण",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p07",
+      "page": 7,
+      "group": "solo",
+      "look": "सिल्वर-ग्रे ब्राइडल-प्रेरित लुक, कढ़ाईदार घेरदार स्कर्ट और आभूषण",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p08",
+      "page": 8,
+      "group": "solo",
+      "look": "सिल्वर-ग्रे पारंपरिक सेट, लाल चूड़ियाँ, मेहंदी और पायल",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p09",
+      "page": 9,
+      "group": "solo",
+      "look": "मैरून-सुनहरा कढ़ाईदार लहँगा-प्रेरित सेट और लाल दुपट्टा",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p10",
+      "page": 10,
+      "group": "solo",
+      "look": "सिल्वर कढ़ाईदार शाम का परिधान और पारंपरिक आभूषण",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p11-a",
+      "page": 11,
+      "group": "pair",
+      "look": "क्रीम धोती/अंगवस्त्रम-प्रेरित पुरुष परिधान, न्यूनतम आभूषण",
+      "target": "adult_masculine"
+    },
+    {
+      "id": "ref-p11-b",
+      "page": 11,
+      "group": "pair",
+      "look": "मैरून-सुनहरा लहँगा-प्रेरित महिला परिधान और दुपट्टा",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p12",
+      "page": 12,
+      "group": "solo",
+      "look": "पन्ना-हरा और सुनहरा राजसी लहँगा-प्रेरित परिधान",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p13",
+      "page": 13,
+      "group": "solo",
+      "look": "गहरा हरा-सुनहरा कढ़ाईदार पारंपरिक परिधान और दुपट्टा",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p14-a",
+      "page": 14,
+      "group": "trio",
+      "look": "मैरून पारंपरिक सेट, लंबे बाल और आभूषण",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p14-b",
+      "page": 14,
+      "group": "trio",
+      "look": "मैरून धोती-प्रेरित पुरुष परिधान और कमरबंध",
+      "target": "adult_masculine"
+    },
+    {
+      "id": "ref-p14-c",
+      "page": 14,
+      "group": "trio",
+      "look": "नीला पारंपरिक सेट और चाँदी-नीले आभूषण",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p15-a",
+      "page": 15,
+      "group": "trio",
+      "look": "मैरून-सुनहरा पारंपरिक महिला परिधान",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p15-b",
+      "page": 15,
+      "group": "trio",
+      "look": "मैरून पुरुष धोती-प्रेरित परिधान और आभूषण",
+      "target": "adult_masculine"
+    },
+    {
+      "id": "ref-p15-c",
+      "page": 15,
+      "group": "trio",
+      "look": "नीला पारंपरिक महिला परिधान और matching आभूषण",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p16",
+      "page": 16,
+      "group": "solo",
+      "look": "आइवरी-सिल्वर शाम का परिधान, महीन कढ़ाई और फूलों वाला हेयरस्टाइल",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p17",
+      "page": 17,
+      "group": "solo",
+      "look": "सिल्वर-ग्रे साड़ी-प्रेरित ड्रेप, लाल चूड़ियाँ और पारंपरिक हार",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p18",
+      "page": 18,
+      "group": "solo",
+      "look": "सादा मरून साड़ी और matching ब्लाउज, प्राकृतिक केश-सज्जा",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p19-a",
+      "page": 19,
+      "group": "pair",
+      "look": "सिल्वर साड़ी-प्रेरित परिधान, चाँदी के आभूषण और फूल",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p19-b",
+      "page": 19,
+      "group": "pair",
+      "look": "क्रीम कुर्ता और मरून कढ़ाईदार शॉल, तानपुरा/वाद्य-सहायक",
+      "target": "adult_masculine"
+    },
+    {
+      "id": "ref-p20",
+      "page": 20,
+      "group": "solo",
+      "look": "सुनहरा-केसरिया ब्राइडल-प्रेरित लहँगा, घूँघट और भारी आभूषण",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p21",
+      "page": 21,
+      "group": "solo",
+      "look": "सिल्वर-ग्रे कढ़ाईदार ड्रेप और पारंपरिक आभूषण",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p22-a",
+      "page": 22,
+      "group": "trio",
+      "look": "मैरून-सुनहरा पारंपरिक महिला परिधान",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p22-b",
+      "page": 22,
+      "group": "trio",
+      "look": "मैरून पुरुष धोती-प्रेरित परिधान",
+      "target": "adult_masculine"
+    },
+    {
+      "id": "ref-p22-c",
+      "page": 22,
+      "group": "trio",
+      "look": "नीला पारंपरिक महिला परिधान",
+      "target": "adult_feminine"
+    },
+    {
+      "id": "ref-p23",
+      "page": 23,
+      "group": "solo",
+      "look": "गहरा नीला-सुनहरा साड़ी-प्रेरित ड्रेप, लाल चूड़ियाँ और पारंपरिक हार",
+      "target": "adult_feminine"
+    }
+  ],
+  "pipeline": {
+    "model_format": "GLB",
+    "rig": "humanoid",
+    "required_per_character": [
+      "unique_mesh_or_distinct_morph_state",
+      "materials",
+      "clothing_meshes",
+      "hair",
+      "accessory_meshes",
+      "humanoid_rig",
+      "thumbnail",
+      "source_page_id"
+    ],
+    "status": "reference_catalog_only",
+    "next_step": "Create and validate individual clothed GLB assets, then import them into the Godot game project."
+  }
+}
