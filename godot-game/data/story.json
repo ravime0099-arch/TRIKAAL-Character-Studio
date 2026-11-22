@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "project": "TRIKAAL — The Royal Beginning",
+  "language": "hi",
+  "source_policy": "Do not invent or overwrite the user's canonical plot. Import the original story text and dialogue when its source file is available.",
+  "acts": [
+    {"id":"act-01","title":"प्रथम अध्याय","status":"content_source_required","scenes":[],"dialogue":[]},
+    {"id":"act-02","title":"द्वितीय अध्याय","status":"content_source_required","scenes":[],"dialogue":[]},
+    {"id":"act-03","title":"तृतीय अध्याय","status":"content_source_required","scenes":[],"dialogue":[]}
+  ],
+  "character_links": "../game-integration/character-roster.json",
+  "note": "The 23-page reference roster describes visual character references only; it does not contain verified plot, dialogue, quests, or complete 3D models."
+}
