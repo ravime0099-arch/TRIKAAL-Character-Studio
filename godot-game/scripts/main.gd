@@ -298,7 +298,10 @@ func _toggle_pause() -> void:
 		return
 	paused = not paused
 	get_tree().paused = paused
-	pause_panel.show() if paused else pause_panel.hide()
+	if paused:
+		pause_panel.show()
+	else:
+		pause_panel.hide()
 
 func _save_progress() -> void:
 	var config := ConfigFile.new()
@@ -311,9 +314,10 @@ func _load_progress() -> void:
 	var config := ConfigFile.new()
 	if config.load(SAVE_PATH) == OK:
 		collected = clampi(int(config.get_value("progress", "collected", 0)), 0, 3)
-		for i in range(min(collected, relics.size())):
-			relics[i].queue_free()
-		relics = relics.slice(collected)
+		for i in range(relics.size() - 1, -1, -1):
+			if i < collected:
+				relics[i].queue_free()
+				relics.remove_at(i)
 	_update_objective()
 
 func _return_to_menu() -> void:
