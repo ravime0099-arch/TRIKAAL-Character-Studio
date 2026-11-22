@@ -54,6 +54,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No generated site changes."
           else
-            git commit -m "Build and publish full TRIKAAL editor [skip ci]"
+            git commit -m "Build and publish full TRIKAAL editor"
             git push origin HEAD:main
           fi
