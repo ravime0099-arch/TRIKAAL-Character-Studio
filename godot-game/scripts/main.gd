@@ -4,7 +4,8 @@ const PlayerScript = preload("res://scripts/player.gd")
 var player: CharacterBody3D
 var started := false
 var selected_character := 0
-var character_names := ["राजसी लाल", "पन्ना हरा", "रजत संध्या", "केसरिया", "मरून साड़ी", "नीला पारंपरिक"]
+var character_ids := ["ref-p01","ref-p02","ref-p03","ref-p04","ref-p05","ref-p06","ref-p07","ref-p08","ref-p09","ref-p10","ref-p11-a","ref-p11-b","ref-p12","ref-p13","ref-p14-a","ref-p14-b","ref-p14-c","ref-p15-a","ref-p15-b","ref-p15-c","ref-p16","ref-p17","ref-p18","ref-p19-a","ref-p19-b","ref-p20","ref-p21","ref-p22-a","ref-p22-b","ref-p22-c","ref-p23"]
+var character_names := ["हल्दी-पीली साड़ी","मैरून राजसी लहँगा","बैंगनी पारंपरिक ड्रेप","आइवरी-सुनहरा लहँगा","रजत संध्या","आइवरी-सिल्वर लुक","सिल्वर-ग्रे ब्राइडल","सिल्वर-ग्रे पारंपरिक","मैरून-सुनहरा लहँगा","सिल्वर कढ़ाईदार लुक","क्रीम धोती-अंगवस्त्रम","मैरून-सुनहरा महिला लुक","पन्ना-हरा राजसी लहँगा","गहरा हरा-सुनहरा परिधान","मैरून पारंपरिक महिला","मैरून धोती परिधान","नीला पारंपरिक सेट","मैरून-सुनहरा महिला लुक 2","मैरून पुरुष परिधान","नीला महिला परिधान","आइवरी-सिल्वर संध्या","सिल्वर साड़ी-प्रेरित ड्रेप","मरून साड़ी","सिल्वर महिला लुक","क्रीम कुर्ता-शॉल","केसरिया-सुनहरा लहँगा","सिल्वर-ग्रे ड्रेप","मैरून-सुनहरा महिला लुक 3","मैरून पुरुष धोती 2","नीला महिला लुक 2","नीला-सुनहरा साड़ी"]
 var title_label: Label
 var status_label: Label
 var start_panel: PanelContainer
@@ -76,14 +77,14 @@ func _build_ui() -> void:
 	title_label.position = Vector2(24, 18)
 	root.add_child(title_label)
 	status_label = Label.new()
-	status_label.text = "प्रारम्भिक playable build · असली reference GLB models अभी जोड़ने बाकी हैं"
+	status_label.text = "23 पृष्ठों के संदर्भ-संग्रह से 31 अलग पात्र स्लॉट जुड़े हैं"
 	status_label.add_theme_font_size_override("font_size", 14)
 	status_label.position = Vector2(24, 58)
 	status_label.add_theme_color_override("font_color", Color("#e1d4c8"))
 	root.add_child(status_label)
 	start_panel = PanelContainer.new()
 	start_panel.position = Vector2(24, 108)
-	start_panel.custom_minimum_size = Vector2(300, 260)
+	start_panel.custom_minimum_size = Vector2(330, 300)
 	root.add_child(start_panel)
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation", 12)
@@ -98,7 +99,7 @@ func _build_ui() -> void:
 	picker.item_selected.connect(_on_character_selected)
 	column.add_child(picker)
 	var note := Label.new()
-	note.text = "ये अभी placeholder रूप हैं। हर PDF संदर्भ का अलग 3D मॉडल GLB आने पर यहाँ लगेगा।"
+	note.text = "हर स्लॉट PDF roster ID से जुड़ा है। असली GLB मिलने पर वही मॉडल अपने-आप लोड होगा; अभी सुरक्षित placeholder दिखेगा।"
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(note)
 	var start := Button.new()
@@ -132,7 +133,7 @@ func _add_touch_button(parent: Control, caption: String, offset: Vector2, action
 
 func _on_character_selected(index: int) -> void:
 	selected_character = index
-	status_label.text = "चयनित पात्र: " + character_names[index] + " · मॉडल स्लॉट तैयार, वास्तविक GLB प्रतीक्षित"
+	status_label.text = "चयनित: " + character_names[index] + " · roster ID: " + character_ids[index]
 
 func _start_game() -> void:
 	if started:
@@ -141,7 +142,8 @@ func _start_game() -> void:
 	start_panel.hide()
 	player = CharacterBody3D.new()
 	player.set_script(PlayerScript)
+	player.set("character_id", character_ids[selected_character])
 	player.name = "PlayerCharacter"
 	player.position = Vector3(0, 0.2, 0)
 	add_child(player)
-	status_label.text = "खेल शुरू! " + character_names[selected_character] + " · चलने के लिए WASD या मोबाइल बटन दबाएँ"
+	status_label.text = "खेल शुरू! " + character_names[selected_character] + " · " + character_ids[selected_character]
