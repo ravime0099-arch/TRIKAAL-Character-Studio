@@ -28,6 +28,8 @@ jobs:
         run: corepack enable
       - name: Clone the open-source human editor
         run: git clone --depth 1 https://github.com/olatunde85/3d-gen.git ara-source
+      - name: Add TRIKAAL Indian presets and clothing looks
+        run: node site-src/patch-upstream.mjs ara-source
       - name: Install editor dependencies
         working-directory: ara-source
         run: pnpm install --no-frozen-lockfile
