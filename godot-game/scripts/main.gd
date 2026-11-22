@@ -18,7 +18,7 @@ var prompt_label: Label
 var start_panel: PanelContainer
 var pause_panel: PanelContainer
 var character_ids := ["ref-p01","ref-p02","ref-p03","ref-p04","ref-p05","ref-p06","ref-p07","ref-p08","ref-p09","ref-p10","ref-p11-a","ref-p11-b","ref-p12","ref-p13","ref-p14-a","ref-p14-b","ref-p14-c","ref-p15-a","ref-p15-b","ref-p15-c","ref-p16","ref-p17","ref-p18","ref-p19-a","ref-p19-b","ref-p20","ref-p21","ref-p22-a","ref-p22-b","ref-p22-c","ref-p23"]
-var character_names := ["हल्दी-पीली साड़ी","मैरून राजसी लहँगा","बैंगनी पारंपरिक ड्रेप","आइवरी-सुनहरा लहँगा","रजत संध्या","आइवरी-सिल्वर लुक","सिल्वर-ग्रे ब्राइडल","सिल्वर-ग्रे पारंपरिक","मैरून-सुनहरा लहँगा","सिल्वर कढ़ाईदार लुक","क्रीम धोती-अंगवस्त्रम","मैरून-सुनहरा महिला लुक","पन्ना-हरा राजसी लहँगा","गहरा हरा-सुनहरा परिधान","मैरून पारंपरिक महिला","मैरून धोती परिधान","नीला पारंपरिक सेट","मैरून-सुनहरा महिला लुक 2","मैरून पुरुष परिधान","नीला महिला परिधान","आइवरी-सिल्वर संध्या","सिल्वर साड़ी-प्रेरित ड्रेप","मरून साड़ी","सिल्वर महिला लुक","क्रीम कुर्ता-शॉल","केसरिया-सुनहरा लहँगा","सिल्वर-ग्रे ड्रेप","मैरून-सुनहरा महिला लुक 3","मैरून पुरुष धोती 2","नीला महिला लुक 2","नीला-सुनहरा साड़ी"]
+var character_names := ["Yellow Sari","Maroon Royal Lehenga","Purple Traditional Drape","Ivory Gold Lehenga","Silver Evening Look","Ivory Silver Look","Silver Grey Bridal","Silver Grey Traditional","Maroon Gold Lehenga","Silver Embroidered Look","Cream Dhoti Outfit","Maroon Gold Female Look","Emerald Royal Lehenga","Dark Green Gold Outfit","Maroon Traditional Female","Maroon Dhoti Outfit","Blue Traditional Set","Maroon Gold Female Look 2","Maroon Male Outfit","Blue Female Outfit","Ivory Silver Evening","Silver Sari Drape","Maroon Sari","Silver Female Look","Cream Kurta Shawl","Saffron Gold Lehenga","Silver Grey Drape","Maroon Gold Female Look 3","Maroon Male Dhoti 2","Blue Female Look 2","Blue Gold Sari"]
 
 func _ready() -> void:
 	_build_world()
@@ -103,13 +103,13 @@ func _build_ui() -> void:
 	title_label.position = Vector2(22, 14)
 	root.add_child(title_label)
 	status_label = Label.new()
-	status_label.text = "अपना पात्र चुनें और अभ्यास क्षेत्र में प्रवेश करें"
+	status_label.text = "Choose your character and enter the practice arena"
 	status_label.add_theme_font_size_override("font_size", 14)
 	status_label.position = Vector2(22, 52)
 	status_label.add_theme_color_override("font_color", Color("#e1d4c8"))
 	root.add_child(status_label)
 	objective_label = Label.new()
-	objective_label.text = "उद्देश्य: 3 अभ्यास-चिह्न खोजें"
+	objective_label.text = "Objective: Find 3 practice markers"
 	objective_label.add_theme_font_size_override("font_size", 18)
 	objective_label.position = Vector2(22, 82)
 	objective_label.add_theme_color_override("font_color", Color("#f0cf91"))
@@ -128,7 +128,7 @@ func _build_ui() -> void:
 	column.add_theme_constant_override("separation", 12)
 	start_panel.add_child(column)
 	var heading := Label.new()
-	heading.text = "अपना पात्र चुनें"
+	heading.text = "Choose Your Character"
 	heading.add_theme_font_size_override("font_size", 22)
 	column.add_child(heading)
 	var picker := OptionButton.new()
@@ -137,11 +137,11 @@ func _build_ui() -> void:
 	picker.item_selected.connect(_on_character_selected)
 	column.add_child(picker)
 	var note := Label.new()
-	note.text = "31 roster स्लॉट उपलब्ध हैं। असली GLB मॉडल न होने पर परीक्षण-पात्र दिखेगा।"
+	note.text = "31 character slots are listed. A simple test character appears until 3D models are added."
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	column.add_child(note)
 	var start := Button.new()
-	start.text = "गेम शुरू करें"
+	start.text = "START GAME"
 	start.custom_minimum_size.y = 48
 	start.pressed.connect(_start_game)
 	column.add_child(start)
@@ -154,23 +154,23 @@ func _build_ui() -> void:
 	var pause_column := VBoxContainer.new()
 	pause_panel.add_child(pause_column)
 	var pause_title := Label.new()
-	pause_title.text = "गेम रुका हुआ है"
+	pause_title.text = "PAUSED"
 	pause_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	pause_column.add_child(pause_title)
 	var resume := Button.new()
-	resume.text = "जारी रखें"
+	resume.text = "RESUME"
 	resume.pressed.connect(_toggle_pause)
 	pause_column.add_child(resume)
 	var save_button := Button.new()
-	save_button.text = "प्रगति सेव करें"
+	save_button.text = "SAVE PROGRESS"
 	save_button.pressed.connect(_save_progress)
 	pause_column.add_child(save_button)
 	var quit_button := Button.new()
-	quit_button.text = "मुख्य मेन्यू"
+	quit_button.text = "MAIN MENU"
 	quit_button.pressed.connect(_return_to_menu)
 	pause_column.add_child(quit_button)
 	var controls := Label.new()
-	controls.text = "चलना: WASD / Arrow keys · मोबाइल: नीचे के बटन · पास जाकर INTERACT दबाएँ"
+	controls.text = "MOVE: WASD / Arrow Keys · Touch: Use the on-screen controls · Press INTERACT near a marker"
 	controls.position = Vector2(22, 126)
 	controls.add_theme_color_override("font_color", Color("#f3e4ce"))
 	root.add_child(controls)
@@ -213,7 +213,7 @@ func _add_touch_button(parent: Control, caption: String, offset: Vector2, action
 
 func _on_character_selected(index: int) -> void:
 	selected_character = index
-	status_label.text = "चयनित: " + character_names[index] + " · " + character_ids[index]
+	status_label.text = "Selected: " + character_names[index] + " · " + character_ids[index]
 
 func _start_game() -> void:
 	if started:
@@ -228,7 +228,7 @@ func _start_game() -> void:
 	add_child(player)
 	_spawn_relics()
 	_load_progress()
-	status_label.text = "अभ्यास क्षेत्र में आपका स्वागत है · " + character_names[selected_character]
+	status_label.text = "Welcome to the practice arena · " + character_names[selected_character]
 	_update_objective()
 
 func _spawn_relics() -> void:
@@ -272,7 +272,7 @@ func _nearest_relic() -> Node3D:
 func _update_interaction_prompt() -> void:
 	var target := _nearest_relic()
 	if target:
-		prompt_label.text = "अभ्यास-चिह्न मिला — INTERACT दबाएँ"
+		prompt_label.text = "Marker nearby — press INTERACT"
 	else:
 		prompt_label.text = ""
 
@@ -289,9 +289,9 @@ func _collect_nearest_relic() -> void:
 	_save_progress()
 
 func _update_objective() -> void:
-	objective_label.text = "उद्देश्य: अभ्यास-चिह्न " + str(collected) + "/3"
+	objective_label.text = "Objective: Practice markers " + str(collected) + "/3"
 	if collected >= 3:
-		objective_label.text = "अभ्यास पूरा! तीनों चिह्न मिल गए। प्रगति सेव है।"
+		objective_label.text = "Practice complete! All 3 markers collected. Progress saved."
 
 func _toggle_pause() -> void:
 	if not started:
@@ -308,7 +308,7 @@ func _save_progress() -> void:
 	config.set_value("progress", "collected", collected)
 	config.set_value("progress", "character_id", character_ids[selected_character])
 	config.save(SAVE_PATH)
-	status_label.text = "प्रगति डिवाइस पर सेव हो गई"
+	status_label.text = "Progress saved on this device"
 
 func _load_progress() -> void:
 	var config := ConfigFile.new()
