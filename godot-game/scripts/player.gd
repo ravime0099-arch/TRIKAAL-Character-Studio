@@ -2,11 +2,12 @@ extends CharacterBody3D
 
 @export var move_speed: float = 4.2
 @export var turn_speed: float = 9.0
+@export var character_id: String = "ref-p01"
 var gravity: float = 18.0
 var visual_root: Node3D
 
 func _ready() -> void:
-	_build_placeholder_body()
+	_build_character()
 
 func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
@@ -25,17 +26,26 @@ func _physics_process(delta: float) -> void:
 		velocity.y = 0.0
 	move_and_slide()
 
-func _build_placeholder_body() -> void:
+func _build_character() -> void:
+	var collider := CollisionShape3D.new()
 	var capsule := CapsuleShape3D.new()
 	capsule.radius = 0.38
 	capsule.height = 1.8
-	var collider := CollisionShape3D.new()
 	collider.shape = capsule
 	collider.position.y = 0.9
 	add_child(collider)
 	visual_root = Node3D.new()
-	visual_root.position.y = 0.0
 	add_child(visual_root)
+	var model_path := "res://characters/" + character_id + "/character.glb"
+	if ResourceLoader.exists(model_path):
+		var model_scene := load(model_path) as PackedScene
+		if model_scene:
+			var model := model_scene.instantiate()
+			visual_root.add_child(model)
+			return
+	_build_placeholder_body()
+
+func _build_placeholder_body() -> void:
 	var body := MeshInstance3D.new()
 	var mesh := CapsuleMesh.new()
 	mesh.radius = 0.38
