@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ara for Developers: 3D Characters in One Line of Code</title>
+    <meta name="description" content="Generate realistic, rigged and animated 3D characters in your web app or game with three.js, or from the command line. Faces, lip-sync, props and 248 animations. Free and open source." />
+    <link rel="icon" href="/TRIKAAL-Character-Studio/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/TRIKAAL-Character-Studio/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/TRIKAAL-Character-Studio/apple-touch-icon.png" />
+    <link rel="canonical" href="https://ara3dgen.com/developers/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ara3dgen.com/developers/" />
+    <meta property="og:site_name" content="Ara 3D Gen" />
+    <meta property="og:title" content="Ara for Developers: 3D characters in one line of code" />
+    <meta property="og:description" content="createCharacter('The Soldier'): realistic, rigged, animated humans for three.js and your pipeline. Free and open source." />
+    <meta property="og:image" content="https://ara3dgen.com/og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#09090b" />
+    <script type="module" crossorigin src="/TRIKAAL-Character-Studio/assets/developers-DY5ikTF1.js"></script>
+    <link rel="modulepreload" crossorigin href="/TRIKAAL-Character-Studio/assets/modulepreload-polyfill-P2Xu9kJm.js">
+    <link rel="modulepreload" crossorigin href="/TRIKAAL-Character-Studio/assets/nav-D3dfhivk.js">
+    <link rel="modulepreload" crossorigin href="/TRIKAAL-Character-Studio/assets/device-B1otKDbw.js">
+    <link rel="modulepreload" crossorigin href="/TRIKAAL-Character-Studio/assets/preload-helper-C0tuMo-7.js">
+    <link rel="stylesheet" crossorigin href="/TRIKAAL-Character-Studio/assets/nav-DT0TMSyn.css">
+    <link rel="stylesheet" crossorigin href="/TRIKAAL-Character-Studio/assets/developers-L_pkDxIq.css">
+  </head>
+  <body>
+    <header class="nav">
+      <a class="brand" href="../"><span class="brand-mark">Ara</span> <span class="brand-sub">3D Gen</span></a>
+      <nav id="site-nav" aria-label="Main">
+        <a href="#playground">Playground</a>
+        <a href="#embed">Embed</a>
+        <a href="#cli">Command line</a>
+        <a href="#mcp">AI assistants</a>
+        <a href="../docs/library/">Library docs</a>
+        <a href="../docs/cli/">CLI docs</a>
+        <a href="https://github.com/olatunde85/3d-gen">GitHub</a>
+      </nav>
+      <a class="btn btn-primary btn-sm" href="../app/">Open Builder</a>
+      <button type="button" class="nav-menu" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><span></span><span></span></button>
+    </header>
+
+    <main>
+      <section class="dev-hero">
+        <p class="dev-eyebrow">Ara for Developers</p>
+        <h1>3D characters in <span class="grad">one line of code.</span></h1>
+        <p class="dev-lede">Realistic, rigged and animated humans, generated on your users' devices. A three.js library for your web app or game, a command-line tool for your pipeline, and an MCP server for your AI assistant. Free and open source.</p>
+        <div class="install" role="tablist" aria-label="Install">
+          <div class="install-tabs">
+            <button type="button" role="tab" aria-selected="true" data-install="npm">Library</button>
+            <button type="button" role="tab" aria-selected="false" data-install="cli">Command line</button>
+            <button type="button" role="tab" aria-selected="false" data-install="mcp">AI assistant</button>
+          </div>
+          <div class="install-line"><code id="install-command">npm install ara3d three</code><button type="button" class="copy" data-copy="#install-command">Copy</button></div>
+        </div>
+        <ul class="dev-facts">
+          <li><b>50</b> <a href="../characters/">presets</a></li>
+          <li><b>248</b> animations</li>
+          <li><b>13</b> vehicles</li>
+          <li>Faces and <b>lip-sync</b></li>
+          <li><b>TypeScript</b> types</li>
+          <li><b>CC0</b> characters</li>
+        </ul>
+      </section>
+
+      <section id="playground" class="playground" aria-label="Playground">
+        <div class="pg-head">
+          <p class="dev-eyebrow">Try it live</p>
+          <p>Change anything: it's rebuilt in your browser, and the code updates to match.</p>
+        </div>
+        <div class="pg-grid">
+          <form class="pg-controls" id="pg-form" onsubmit="return false">
+            <fieldset>
+              <legend>Character</legend>
+              <div class="seg" role="radiogroup" aria-label="Character source">
+                <label><input type="radio" name="source" value="preset" checked /><span>Preset</span></label>
+                <label><input type="radio" name="source" value="random" /><span>Random</span></label>
+                <label><input type="radio" name="source" value="share" /><span>Share link</span></label>
+              </div>
+              <label class="field" data-for="preset"><span>Preset</span><select id="pg-preset"></select></label>
+              <div class="field" data-for="random" hidden>
+                <span>Seed</span>
+                <div class="pg-row"><input id="pg-seed" type="number" min="0" max="1000000000" value="42" /><button type="button" id="pg-dice" class="ghost" aria-label="New random seed">Roll</button></div>
+              </div>
+              <label class="field" data-for="share" hidden><span>Link from the builder's Share button</span><input id="pg-share" type="url" placeholder="https://ara3dgen.com/app/#c=…" /></label>
+            </fieldset>
+            <fieldset>
+              <legend>Animation</legend>
+              <div class="field"><span class="pg-field-head"><label for="pg-clip">Playing</label><button type="button" class="pg-more" id="pg-all-clips">See all 248</button></span><select id="pg-clip"></select></div>
+              <label class="toggle"><input id="pg-inplace" type="checkbox" checked /><span>In place <small>(off: walks and runs move forward)</small></span></label>
+            </fieldset>
+            <fieldset>
+              <legend>Props</legend>
+              <div class="pg-row3">
+                <label class="field"><span>Weapon</span><select id="pg-weapon"></select></label>
+                <label class="field"><span>Carry</span><select id="pg-carry"></select></label>
+                <label class="field"><span>Vehicle</span><select id="pg-vehicle"></select></label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Colours</legend>
+              <div class="pg-colors" id="pg-colors"></div>
+            </fieldset>
+            <fieldset>
+              <legend>Face</legend>
+              <div class="pg-chips" id="pg-expressions" role="radiogroup" aria-label="Expression"></div>
+              <label class="toggle"><input id="pg-talk" type="checkbox" /><span>Talk, as lip-sync would</span></label>
+            </fieldset>
+            <fieldset>
+              <legend>Detail</legend>
+              <div class="seg" role="radiogroup" aria-label="Detail">
+                <label><input type="radio" name="detail" value="low" /><span>Low</span></label>
+                <label><input type="radio" name="detail" value="medium" checked /><span>Medium</span></label>
+                <label><input type="radio" name="detail" value="high" /><span>High</span></label>
+              </div>
+            </fieldset>
+          </form>
+
+          <div class="pg-stage">
+            <div class="pg-view" id="pg-view">
+              <div class="pg-loading" id="pg-loading" aria-live="polite">
+                <div class="bar"><i id="pg-bar"></i></div>
+                <span id="pg-status">Loading the character data…</span>
+              </div>
+              <p class="pg-hint">Drag to orbit · scroll to zoom</p>
+            </div>
+            <div class="pg-meta">
+              <span id="pg-stats">&nbsp;</span>
+              <span class="pg-actions">
+                <a id="pg-builder" class="ghost-link" href="../app/" target="_blank" rel="noopener">Edit in the builder</a>
+                <button type="button" id="pg-download" class="ghost" disabled>Download GLB</button>
+              </span>
+            </div>
+            <div class="code">
+              <div class="code-head"><div class="code-tabs" role="tablist" aria-label="Language"><button type="button" role="tab" aria-selected="true" data-lang="js">JavaScript</button><button type="button" role="tab" aria-selected="false" data-lang="ts">TypeScript</button></div><button type="button" class="copy" data-copy="#pg-code">Copy</button></div>
+              <pre><code id="pg-code"></code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="library" class="dev-embed dev-library" aria-labelledby="library-title" hidden>
+        <div>
+          <h2 id="library-title">Characters in your three.js app.</h2>
+          <p>One call builds a realistic, rigged and animated character on your users' devices: choose a preset, a random seed or a builder share link, add props, colours and animations, and drop it into your scene.</p>
+          <pre class="dev-terminal" aria-label="Library example"><code><span class="t">import</span> { createCharacter } <span class="t">from</span> <span class="s">'ara3d'</span>;
+
+<span class="t">const</span> hero = <span class="t">await</span> createCharacter(<span class="s">'The Soldier'</span>, {
+  animations: [<span class="s">'rifle_idle'</span>],
+  weapon: <span class="s">'rifle'</span>,
+});
+scene.add(hero.scene);</code></pre>
+          <a class="btn btn-ghost" href="../docs/library/">Library guide</a>
+        </div>
+        <div class="dev-library-media">
+          <video muted loop playsinline preload="none" aria-label="The character this code makes"></video>
+        </div>
+      </section>
+
+      <section id="embed" class="dev-embed" aria-labelledby="embed-title">
+        <div>
+          <h2 id="embed-title">On any web page, with one tag.</h2>
+          <p>No build tools and no 3D code: paste two lines into plain HTML, WordPress, Webflow or any framework. In the builder, <b>Share</b> then <b>Copy embed code</b> gives you the tag for your own character.</p>
+          <pre class="dev-terminal" aria-label="Embed code"><code>&lt;<span class="t">script</span> <span class="a">type</span>=<span class="s">"module"</span> <span class="a">src</span>=<span class="s">"https://cdn.jsdelivr.net/npm/ara3d@0/dist/embed.js"</span>&gt;&lt;/<span class="t">script</span>&gt;
+
+&lt;<span class="t">ara-character</span> <span class="a">preset</span>=<span class="s">"The Priest"</span> <span class="a">animation</span>=<span class="s">"walk 3s, look_around, talk_gestures"</span> <span class="a">expression</span>=<span class="s">"happy"</span>&gt;&lt;/<span class="t">ara-character</span>&gt;</code></pre>
+          <a class="btn btn-ghost" href="../docs/embed/">Embed guide</a>
+        </div>
+        <div class="dev-embed-demo" id="embed-demo">
+          <ara-character preset="The Priest" animation="walk 3s, look_around, talk_gestures" expression="happy" detail="low"></ara-character>
+          <ara-character preset="The Female Executive" colors="outfit: #1d2a44; carry: #8a1c1c" animation="model_walk" detail="low"></ara-character>
+          <ara-character random="7" animation="texting 4s, phone_call 4s" expression="happy" detail="low"></ara-character>
+        </div>
+      </section>
+
+      <section class="dev-uses" aria-labelledby="uses-title">
+        <h2 id="uses-title">What people build with it</h2>
+        <div class="dev-use-grid">
+          <article><h3>Games and crowds</h3><p>Heroes, enemies and whole streets of NPCs from presets or seeds. Set a speed and they walk or run in step with the ground.</p></article>
+          <article><h3>Talking characters</h3><p>Expressions, natural blinking, a head that turns to look at things, and lip-sync straight from any audio or microphone. Pair with any voice or AI.</p></article>
+          <article><h3>Avatars and try-on</h3><p>Let users design someone in the builder, then load their share link straight into your app.</p></article>
+          <article><h3>Asset pipelines</h3><p>Generate GLB, FBX or OBJ in CI for Unity, Unreal, Godot or Blender, from small character files kept in Git.</p></article>
+          <article><h3>AI assistants</h3><p>Connect Claude, Cursor or VS Code with <code>npx ara3d mcp</code> and ask for characters, films or games in plain words. Published JSON schemas keep what they write valid.</p></article>
+          <article><h3>Prototypes</h3><p>A believable cast for a pitch, a demo or a game jam in minutes, without a 3D artist.</p></article>
+        </div>
+      </section>
+
+      <section id="cli" class="dev-cli" aria-labelledby="cli-title">
+        <div>
+          <h2 id="cli-title">Prefer files? Use the command line.</h2>
+          <p>The same characters as GLB, FBX, OBJ or ZIP, built on your machine. The first run downloads the data once; after that it works offline.</p>
+          <a class="btn btn-ghost" href="../docs/cli/">Command-line guide</a>
+        </div>
+        <pre class="dev-terminal" aria-label="Command-line examples"><code><span class="c"># a hero with a rifle, walking and running</span>
+<span class="p">$</span> npx ara3d export --preset "The Soldier" --weapon rifle --animations walk,run
+<span class="c"># 200 townsfolk for a crowd</span>
+<span class="p">$</span> npx ara3d export --random 1-200 --detail low --no-animations
+<span class="c"># your own character, as a file you can keep in Git</span>
+<span class="p">$</span> npx ara3d new hero &amp;&amp; npx ara3d export --params hero.json --formats glb,fbx</code></pre>
+      </section>
+
+      <section id="mcp" class="dev-cli dev-mcp" aria-labelledby="mcp-title">
+        <div>
+          <h2 id="mcp-title">Or just ask your AI assistant.</h2>
+          <p>Add Ara to Claude, Cursor or VS Code with one line, then ask for characters in plain words. The assistant designs them, builds them on your machine and hands back the files, with a link to keep editing in the builder. It can also write Ara Studio films and Ara Play games, and hand back a link that opens them.</p>
+          <div class="install-line mcp-line"><code id="mcp-command">claude mcp add ara3d -- npx -y ara3d mcp</code><button type="button" class="copy" data-copy="#mcp-command">Copy</button></div>
+          <a class="btn btn-ghost" href="../docs/mcp/">Setup for every assistant</a>
+        </div>
+        <div class="mcp-result">
+        <pre class="dev-terminal dev-chat" aria-label="An example conversation"><code><span class="who">You</span>
+Make a cyberpunk hacker with a rifle, walking,
+as a GLB for my Godot game.
+
+<span class="who">Claude</span> <span class="c">· ara3d create_character</span>
+Made The Cyberpunk Hacker: 151 cm tall,
+44,660 triangles, 1 animation, in 1.5 s.
+
+  <span class="file">~/ara3d-characters/The_Cyberpunk_Hacker.glb</span>
+
+See it and keep editing in the Ara builder:
+<span class="c">https://ara3dgen.com/app/#c=…</span></code></pre>
+          <figure class="mcp-figure"><video src="../media/develop/mcp.mp4" muted loop playsinline preload="metadata" aria-label="The Cyberpunk Hacker walking with a rifle"></video><figcaption>The character from that conversation.</figcaption></figure>
+        </div>
+      </section>
+
+      <section id="templates" class="dev-next" aria-labelledby="templates-title">
+        <h2 id="templates-title">Start from a template</h2>
+        <p class="dev-lead">The web ones open and run in your browser on StackBlitz, with nothing to install. Or copy a folder from <a href="https://github.com/olatunde85/3d-gen/tree/main/examples">GitHub</a>.</p>
+        <div class="dev-next-grid">
+          <a href="https://stackblitz.com/github/olatunde85/3d-gen/tree/main/examples/three-starter"><b>three.js game starter</b><span>A character you steer with the keyboard or by clicking the ground. It walks, runs and looks at you when it stops.</span></a>
+          <a href="https://stackblitz.com/github/olatunde85/3d-gen/tree/main/examples/react-three-fiber"><b>React Three Fiber</b><span>A reusable &lt;Character&gt; component: pick a preset, click to walk there, double-click to run.</span></a>
+          <a href="https://github.com/olatunde85/3d-gen/tree/main/examples/godot-starter"><b>Godot 4</b><span>Export a character with one command, open the folder in Godot, and walk it around. It blinks and changes expression.</span></a>
+          <a href="https://stackblitz.com/github/olatunde85/3d-gen/tree/main/examples/html-embed"><b>Plain HTML</b><span>Three characters on a page with the &lt;ara-character&gt; tag: one follows your pointer, one plays a sequence.</span></a>
+        </div>
+      </section>
+
+      <section class="dev-next" aria-labelledby="next-title">
+        <h2 id="next-title">Go further</h2>
+        <div class="dev-next-grid">
+          <a href="../docs/library/"><b>Library guide</b><span>Options, faces, crowds, Mixamo animations and self-hosting the data.</span></a>
+          <a href="../docs/embed/"><b>Embed guide</b><span>Every attribute of the &lt;ara-character&gt; tag, sizing and events.</span></a>
+          <a href="../docs/mcp/"><b>AI assistants (MCP)</b><span>Let Claude, Cursor or VS Code make characters, films and games for you.</span></a>
+          <a href="../docs/cli/"><b>Command-line guide</b><span>Every command and option, character files and error handling.</span></a>
+          <a href="https://ara3dgen.com/schemas/index.json"><b>JSON schemas</b><span>The character, film and game formats, for editors and AI tools.</span></a>
+          <a href="https://www.npmjs.com/package/ara3d"><b>npm package</b><span>ara3d, with types, for the browser and Node 20+.</span></a>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="pg-dialog" id="pg-clips" aria-labelledby="pg-clips-title">
+      <div class="pg-dialog-head">
+        <h3 id="pg-clips-title">All 248 animations</h3>
+        <button type="button" class="ghost" id="pg-clips-close">Close</button>
+      </div>
+      <input type="search" id="pg-clip-search" placeholder="Search, such as dance, rifle or swim" aria-label="Search animations" />
+      <div class="pg-clip-list" id="pg-clip-list"></div>
+    </dialog>
+
+    <footer class="footer">
+      <div class="footer-brand">
+        <a class="brand" href="../"><span class="brand-mark">Ara</span> <span class="brand-sub">3D Gen</span></a>
+        <p><i>Ara</i> is Yoruba for “body”.</p>
+      </div>
+      <nav class="footer-cols" aria-label="Footer">
+        <div><h3>Make</h3><a href="../app/">Builder</a><a href="../characters/">Characters</a><a href="../studio/">Studio</a><a href="../play/">Play</a></div>
+        <div><h3>Develop</h3><a href="./">Developers</a><a href="../docs/library/">Library</a><a href="../docs/embed/">Embed</a><a href="../docs/cli/">Command line</a><a href="../docs/mcp/">MCP</a></div>
+        <div><h3>Project</h3><a href="../docs/">Docs</a><a href="https://github.com/olatunde85/3d-gen">GitHub</a><a href="../terms/">Terms</a><a href="../privacy/">Privacy</a></div>
+      </nav>
+      <p class="footer-credits">Code: MIT · Character data: CC0 (MakeHuman) · Motion capture: <a href="http://mocap.cs.cmu.edu">CMU Graphics Lab</a></p>
+    </footer>
+  </body>
+</html>

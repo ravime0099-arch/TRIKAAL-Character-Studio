@@ -1,0 +1,1 @@
+var e=matchMedia(`(max-width: 860px), (pointer: coarse)`).matches||(navigator.deviceMemory??8)<=4;export{e as t};

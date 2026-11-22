@@ -1,0 +1,10 @@
+Mediabunny 1.66.2
+Copyright (c) 2026-present, Vanilagy and contributors
+Licence: MPL-2.0
+
+Ara Studio uses the unmodified Mediabunny library for MP4 encoding and muxing.
+The exact original source used by this build is available in source.zip in this directory.
+Its licence is included in LICENSE.txt and in the source archive.
+
+Upstream: https://github.com/Vanilagy/mediabunny
+Package: https://www.npmjs.com/package/mediabunny/v/1.66.2

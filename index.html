@@ -1,46 +1,18 @@
 <!doctype html>
-<html lang="hi">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#17131e"><title>TRIKAAL Character Studio</title>
-<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/ara3d@0/dist/embed.js"></script>
+<html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#17131e"><title>TRIKAAL Character Studio</title>
 <style>
-#viewport{height:min(66vh,720px);min-height:390px;padding:0;background:radial-gradient(ellipse at 50% 42%,#59424c,#17131e 72%);overflow:hidden}
-ara-character{display:block;width:100%;height:100%;min-height:390px}
-.editor .panel.active{display:grid}.panel{gap:12px}.actions{grid-template-columns:1fr 1fr}
-.status{font-size:12px;color:#dfc18c}.hint{font-size:12px;color:#c7b8c8;line-height:1.6;padding:12px}
-.library{padding:14px;border-top:1px solid #39303e}.library h2{font-size:16px;margin:0 0 10px}.library-row{display:flex;gap:8px;align-items:center;margin:8px 0}.library-row input{min-width:0}.library-list{display:grid;gap:7px;margin-top:10px}.character-item{display:flex;align-items:center;gap:8px;padding:9px;border:1px solid #504456;border-radius:9px;background:#28222e}.character-item span{flex:1;min-width:0;overflow-wrap:anywhere;font-size:12px}.character-item button{padding:7px}.smallprint{font-size:11px;color:#b8aab9;line-height:1.5}
-@media(max-width:760px){#viewport{height:55vh;min-height:370px}.library-row{flex-wrap:wrap}.library-row input{flex:1 1 100%}}
-</style>
-</head>
-<body>
-<header><div><div class="eyebrow">TRIKAAL · CREATOR LAB</div><h1>Character Studio</h1><p>विस्तृत मानव पात्र निर्माण · भारतीय रूप-सज्जा लक्ष्य</p></div><a class="pill" href="https://ara3dgen.com/app/" target="_blank" rel="noopener" style="text-decoration:none">DETAILED 3D EDITOR ↗</a></header>
-<main>
-<section class="stage"><div class="stage-top"><span>3D HUMAN PREVIEW</span><span id="status">मानव मॉडल लोड हो रहा है…</span></div>
-<div id="viewport"><ara-character id="human" preset="The Adventurer" animation="idle" detail="high" background="#302630" auto-rotate zoom></ara-character></div>
-<div class="stage-bottom"><button id="rotate">⟳ ऑटो घुमाव</button><button id="zoom">ज़ूम सक्षम</button></div></section>
-<section class="editor"><nav class="tabs"><button class="tab active" data-tab="identity">पात्र</button><button class="tab" data-tab="look">रूप</button><button class="tab" data-tab="motion">गतिविधि</button></nav>
-<div class="panel active" id="identity">
-<label>मानव पात्र का आधार<select id="preset">
-<option>The Adventurer</option><option>The Soldier</option><option>The Female Executive</option><option>The Bride</option><option>The Priest</option><option>The Chef</option><option>The Footballer</option><option>The Doctor</option><option>The Nurse</option><option>The Airline Pilot</option><option>The Yoruba Warrior</option>
-</select></label>
-<label>मॉडल की गुणवत्ता<select id="detail"><option value="low">Low · हल्का</option><option value="medium">Medium · संतुलित</option><option value="high" selected>High · अधिक विवरण</option></select></label>
-<p class="note">यह मानव 3D मॉडल का preview है। शरीर के सैकड़ों morph controls और प्रत्येक अंग का सूक्ष्म sculpting करने के लिए ऊपर दिया Detailed 3D Editor खोलें।</p>
+*{box-sizing:border-box}body{margin:0;background:#100e14;color:#f5f0eb;font-family:system-ui,"Noto Sans Devanagari",sans-serif}header{padding:22px max(18px,calc((100vw - 1080px)/2));background:#19151f;border-bottom:1px solid #39303e}.eyebrow{color:#d4a65e;letter-spacing:2px;font-size:12px}h1{font-size:clamp(27px,5vw,46px);margin:8px 0}header p{color:#c5b7c7;max-width:760px;line-height:1.7}main{max-width:1080px;margin:auto;padding:20px}.hero{padding:25px 0}.hero h2{font-size:25px}.hero p,.muted{color:#c4b8c7;line-height:1.75}.actions{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0}.btn{display:inline-block;text-decoration:none;padding:14px 19px;border-radius:10px;background:#9b6836;color:white;font-weight:700}.btn.secondary{background:#29232f;border:1px solid #65536b}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:20px 0}.card{background:#1b1721;border:1px solid #39303e;border-radius:13px;padding:17px}.card h3{margin:0 0 8px;color:#edc98d}.card p{margin:0;color:#c4b8c7;line-height:1.6;font-size:14px}.notice{border-left:3px solid #d1a15d;background:#28222e;padding:15px;margin:22px 0;line-height:1.7;color:#e1d4e4}footer{text-align:center;color:#817688;padding:25px;font-size:12px}a{color:#e8c78e}
+</style></head><body>
+<header><div class="eyebrow">TRIKAAL · CHARACTER CREATOR</div><h1>अपना 3D मानव पात्र बनाइए</h1><p>अब केवल mannequin preview नहीं। इस वेबसाइट में विस्तृत 3D character builder जोड़ा जा रहा है—शरीर, चेहरा, त्वचा, बाल, कपड़े, rigging, animation और मॉडल export सहित।</p>
+<div class="actions"><a class="btn" href="./editor/">पूरा 3D Character Editor खोलें ↗</a><a class="btn secondary" href="./legacy-preview.html">पुराना Preview</a></div></header>
+<main><section class="hero"><h2>Editor में क्या मिलेगा</h2><p>Editor एक वास्तविक human mesh पर काम करता है। खाली आधार से शुरू करें या preset चुनें, फिर शरीर और चेहरे के sliders बदलें। पात्र को rig करें, animation देखें और 3D file export करें।</p></section>
+<div class="grid">
+<article class="card"><h3>शरीर और चेहरा</h3><p>पुरुष/महिला base, कद, वजन, मांसपेशियाँ, शरीर के अनुपात, सिर, आँखें, नाक, होंठ, जबड़ा, गाल, ठोड़ी और अन्य उपलब्ध morph controls।</p></article>
+<article class="card"><h3>त्वचा और बाल</h3><p>उपलब्ध skin materials, बालों की शैलियाँ, चेहरे के बाल और चेहरे के expressions।</p></article>
+<article class="card"><h3>कपड़े और accessories</h3><p>Builder में मौजूद garments, accessories और recolouring controls। कपड़ों का हटना/बदलना उपलब्ध model options पर निर्भर है।</p></article>
+<article class="card"><h3>Rig और animation</h3><p>Auto-rigged human, motion clips, pose preview और game-engine उपयोग के लिए export विकल्प।</p></article>
+<article class="card"><h3>Save और export</h3><p>Editable character settings को JSON के रूप में सेव/दोबारा खोलें; उपलब्ध export panel से GLB, FBX और OBJ निकालें।</p></article>
+<article class="card"><h3>TRIKAAL Indian Pack</h3><p>साड़ी, ब्लाउज, लहँगा-चोली, सलवार-कमीज़, धोती, कुर्ता, शेरवानी, राजपूती पोशाक, पगड़ी/साफा, आभूषण और makeup के लिए अलग भारतीय asset pack तैयार किया जाना है।</p></article>
 </div>
-<div class="panel" id="look">
-<label>पोशाक का रंग<input id="outfitColor" type="color" value="#762d3b"></label>
-<label>जूते का रंग<input id="shoeColor" type="color" value="#30251f"></label>
-<p class="note">भारतीय wardrobe अभी निर्माणाधीन है—साड़ी, लहंगा, चोली, सलवार-कमीज़, धोती, कुर्ता, शेरवानी, अंगरखा, पगड़ी/साफा, आभूषण और makeup के वास्तविक 3D assets अलग से जोड़ने होंगे। केवल रंग बदलना इन्हें उपलब्ध नहीं कराता।</p>
-</div>
-<div class="panel" id="motion">
-<label>एनिमेशन<select id="animation"><option value="idle">स्थिर खड़ा</option><option value="model_walk">कैटवॉक</option><option value="walk">चलना</option><option value="run">दौड़ना</option><option value="talk_gestures">बातचीत</option><option value="phone_call">फोन पर बात</option></select></label>
-<label>चेहरे का भाव<select id="expression"><option value="neutral">सामान्य</option><option value="happy">प्रसन्न</option><option value="angry">क्रोधित</option><option value="sad">उदास</option><option value="surprised">आश्चर्य</option></select></label>
-</div>
-<div class="actions"><button class="primary" id="save">वर्तमान सेटिंग सेव</button><button id="load">चुना पात्र खोलें</button><button id="share">पूरा 3D Editor ↗</button><button id="reset">रीसेट</button></div>
-<section class="library"><h2>मेरे पात्रों का संग्रह</h2><div class="library-row"><input id="characterName" maxlength="50" placeholder="नए पात्र का नाम लिखें"><button class="primary" id="saveCharacter">+ नया पात्र सेव</button></div><div id="characterList" class="library-list"><p class="smallprint">अभी कोई पात्र सेव नहीं है।</p></div><p class="smallprint">यह संग्रह इसी ब्राउज़र/डिवाइस में सेव होता है। फिलहाल इसमें नाम और preview की वर्तमान सेटिंग्स सेव होती हैं—पूरा sculpted 3D मॉडल/GLB नहीं। अपने पूरे sculpted मॉडल को Detailed Editor में अलग से export करें।</p></section>
-<div class="hint">लक्ष्य: हर पात्र के लिए अलग शरीर-माप, चेहरा, त्वचा, बाल, भारतीय वस्त्र, आभूषण, makeup, pose और animation; फिर unlimited local character library और GLB export। इसे चरणबद्ध तरीके से वास्तविक 3D assets व controls के साथ जोड़ा जाएगा।</div>
-</section></main>
-<footer>TRIKAAL Character Studio · Zero-budget development · Separate from Sahitya-gram</footer>
-<script type="module" src="app.js"></script>
-</body></html>
+<div class="notice"><strong>ज़रूरी स्पष्टता:</strong> यह build upstream Ara 3D Gen के वास्तविक editor को self-host करके इस वेबसाइट के /editor/ पते पर रखेगा। उसके उपलब्ध body/face controls और export असली हैं। लेकिन भारतीय साड़ी/राजपूती पोशाक जैसे bespoke 3D garments और jewellery अभी अलग से model/rig करके जोड़ने होंगे; उन्हें केवल सूची में लिख देने से वे 3D editor में नहीं आ जाते। इसी तरह आधार मॉडल में detailed genital anatomy उपलब्ध नहीं है।</div>
+<p class="muted">शून्य बजट लक्ष्य · GitHub Pages · मोबाइल Chrome · Sahitya-gram और पुराने TRIKAAL game से पूर्णतः अलग</p></main><footer>TRIKAAL Character Studio · स्वतंत्र परियोजना</footer></body></html>

@@ -1,0 +1,2314 @@
+{
+  "$id": "https://ara3dgen.com/schemas/character.v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ara character input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "version"
+  ],
+  "anyOf": [
+    {
+      "required": [
+        "preset"
+      ]
+    },
+    {
+      "required": [
+        "params"
+      ]
+    }
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Optional link to this schema, for editors."
+    },
+    "kind": {
+      "const": "ara-character"
+    },
+    "version": {
+      "const": 1
+    },
+    "preset": {
+      "type": "string",
+      "enum": [
+        "The Resort Guest",
+        "The Lifeguard",
+        "The Paramedic",
+        "The Nurse",
+        "The Doctor",
+        "The Lab Scientist",
+        "The Chef",
+        "The Photographer",
+        "The Flight Attendant",
+        "The Airline Pilot",
+        "The Dispatch Rider",
+        "The Road Worker",
+        "The Street Racer",
+        "The Police Officer (USA)",
+        "The MMA Fighter",
+        "The Mob Boss",
+        "The Clown",
+        "The Masked Robber",
+        "The Getaway Driver",
+        "The Security Guard",
+        "The Motorcycle Cop",
+        "The Army Medic",
+        "The Bride",
+        "The Covert Spy",
+        "The Professional Hitman",
+        "The Bodyguard",
+        "The Corporate High-Flier",
+        "The Priest",
+        "The Female Executive",
+        "The Arabian Oil Tycoon",
+        "The Miami Dealer",
+        "The Prison Escapee",
+        "The Gangster",
+        "The Beach Dude",
+        "The Beach Girl",
+        "Athletic man",
+        "Athletic woman",
+        "Businesswoman",
+        "Heavy brute",
+        "Elder",
+        "Teen",
+        "The Adventurer",
+        "The Explorer",
+        "The Basketball Player",
+        "The Footballer",
+        "The DJ",
+        "The Secret Agent",
+        "The Soldier",
+        "The Gamer",
+        "The Schoolboy",
+        "The Schoolgirl",
+        "The Cool Kid",
+        "The Cyberpunk Hacker",
+        "The Wasteland Survivor",
+        "The African Warrior",
+        "The Yoruba Warrior",
+        "The Maasai Warrior",
+        "The Zulu Warrior",
+        "The Dahomey Warrior",
+        "The Police Officer (Nigeria)",
+        "The FRSC Officer (Nigeria)",
+        "The American Sheriff",
+        "Detective"
+      ]
+    },
+    "params": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000,
+          "description": "Picks the small random variations; the same seed always gives the same character."
+        },
+        "gender": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = female, 1 = male; values between blend the two."
+        },
+        "age": {
+          "type": "number",
+          "minimum": 0.20982142857142858,
+          "maximum": 1,
+          "description": "Normalized age: 0.5 = 25 years, 1 = 90 years; the lowest allowed is 12 years. ageYears is easier to read."
+        },
+        "muscle": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = least muscle, 0.5 = average, 1 = most."
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = slimmest, 0.5 = average, 1 = heaviest."
+        },
+        "height": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = shortest, 0.5 = average for the gender and age, 1 = tallest. Not centimetres: the exported height depends on the whole body."
+        },
+        "proportions": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Below 0.5 = less common proportions, 0.5 = neutral, 1 = idealised proportions."
+        },
+        "african": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Share of African features in the ethnic mix. african, asian and caucasian are relative: they are divided by their total, so 1/1/1 is an even mix."
+        },
+        "asian": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Share of Asian features in the ethnic mix, relative to african and caucasian."
+        },
+        "caucasian": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Share of Caucasian features in the ethnic mix, relative to african and asian."
+        },
+        "breastSize": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = smallest, 0.5 = average, 1 = largest."
+        },
+        "breastFirmness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "0 = softest, 0.5 = average, 1 = firmest."
+        },
+        "modifiers": {
+          "type": "object",
+          "additionalProperties": false,
+          "maxProperties": 400,
+          "properties": {
+            "breast/breast-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Vertical position"
+            },
+            "breast/breast-dist": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Horizontal distance"
+            },
+            "breast/breast-point": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Pointiness"
+            },
+            "breast/breast-volume-vert": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Breast Volume"
+            },
+            "head/head-age": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Age"
+            },
+            "head/head-fat": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Head fat"
+            },
+            "head/head-angle": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Angle"
+            },
+            "head/head-oval": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Oval"
+            },
+            "head/head-round": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Round"
+            },
+            "head/head-rectangular": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Rectangular"
+            },
+            "head/head-square": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Square"
+            },
+            "head/head-triangular": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Triangular"
+            },
+            "head/head-invertedtriangular": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Invertedtriangular"
+            },
+            "head/head-diamond": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Diamond"
+            },
+            "head/head-back-scale-depth": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale depth of parietal side"
+            },
+            "head/head-scale-depth": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale depth"
+            },
+            "head/head-scale-horiz": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale horizontally"
+            },
+            "head/head-scale-vert": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale vertically"
+            },
+            "head/head-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move horizontally"
+            },
+            "head/head-trans:down|up": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move vertically (down/up)"
+            },
+            "head/head-trans:backward|forward": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move depth (backward/forward)"
+            },
+            "forehead/forehead-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Forehead bulge"
+            },
+            "forehead/forehead-scale-vert": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale vertically"
+            },
+            "forehead/forehead-nubian": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Cranic shape"
+            },
+            "forehead/forehead-temple": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Temple bulge"
+            },
+            "eyebrows/eyebrows-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Eyebrows bulge"
+            },
+            "eyebrows/eyebrows-angle": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Eyebrows angle"
+            },
+            "eyebrows/eyebrows-trans:down|up": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move vert (down/up)"
+            },
+            "neck/neck-double": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Double neck"
+            },
+            "neck/neck-scale-depth": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale depth"
+            },
+            "neck/neck-scale-horiz": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale horizontally"
+            },
+            "neck/neck-scale-vert": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale vertically"
+            },
+            "neck/neck-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move horizontally."
+            },
+            "neck/neck-trans:down|up": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move vertically (down/up)"
+            },
+            "neck/neck-trans:backward|forward": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move depth (backward/forward)"
+            },
+            "neck/neck-back-scale-depth": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale depth of nape"
+            },
+            "eyes/eye-bag": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Eye bag volume"
+            },
+            "eyes/eye-bag-height": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Eye bag height"
+            },
+            "eyes/eye-eyefold-angle": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Eyefold angle"
+            },
+            "eyes/eye-epicanthus": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Eye epicanthus"
+            },
+            "eyes/eye-eyefold": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Eyefold volume"
+            },
+            "eyes/eye-height1": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale height 1"
+            },
+            "eyes/eye-height2": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale height 2"
+            },
+            "eyes/eye-height3": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale height 3"
+            },
+            "eyes/eye-push1": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move outer corner horiz."
+            },
+            "eyes/eye-push2": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move inner corner horiz."
+            },
+            "eyes/eye-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move eye horizontally"
+            },
+            "eyes/eye-scale": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale eye"
+            },
+            "eyes/eye-corner1": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move outer corner vert."
+            },
+            "eyes/eye-corner2": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move inner corner vert."
+            },
+            "eyes/eye-bag:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Eye bag volume (decr/incr)"
+            },
+            "eyes/eye-bag-height:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Eye bag height (decr/incr)"
+            },
+            "eyes/eye-eyefold-angle:down|up": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Eyefold angle (down/up)"
+            },
+            "eyes/eye-epicanthus:in|out": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Eye epicanthus (in/out)"
+            },
+            "eyes/eye-eyefold:concave|convex": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Eyefold volume (concave/convex)"
+            },
+            "eyes/eye-height1:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale height 1 (decr/incr)"
+            },
+            "eyes/eye-height2:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale height 2 (decr/incr)"
+            },
+            "eyes/eye-height3:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale height 3 (decr/incr)"
+            },
+            "eyes/eye-push1:in|out": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move outer corner horiz. (in/out)"
+            },
+            "eyes/eye-push2:in|out": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move inner corner horiz. (in/out)"
+            },
+            "eyes/eye-trans:in|out": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move eye horizontally (in/out)"
+            },
+            "eyes/eye-scale:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale eye (decr/incr)"
+            },
+            "eyes/eye-corner1:down|up": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move outer corner vert. (down/up)"
+            },
+            "eyes/eye-corner2:down|up": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move inner corner vert. (down/up)"
+            },
+            "nose/nose-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move vertically"
+            },
+            "nose/nose-trans:backward|forward": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move depth (backward/forward)"
+            },
+            "nose/nose-trans:in|out": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move horizontally (in/out)"
+            },
+            "nose/nose-scale-vert": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale vertically"
+            },
+            "nose/nose-scale-horiz": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale horizontally"
+            },
+            "nose/nose-scale-depth": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale depth"
+            },
+            "nose/nose-nostrils-width": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale nostrils width"
+            },
+            "nose/nose-point-width": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale tip width"
+            },
+            "nose/nose-base": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move base vert."
+            },
+            "nose/nose-width1": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale width 1"
+            },
+            "nose/nose-width2": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale width 2"
+            },
+            "nose/nose-width3": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale width 3"
+            },
+            "nose/nose-compression": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Compression"
+            },
+            "nose/nose-curve": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Curve"
+            },
+            "nose/nose-greek": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Greek"
+            },
+            "nose/nose-hump": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Hump"
+            },
+            "nose/nose-volume": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Volume"
+            },
+            "nose/nose-nostrils-angle": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Nostrils angle"
+            },
+            "nose/nose-point": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move tip vertically"
+            },
+            "nose/nose-septumangle": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Septum Angle"
+            },
+            "nose/nose-flaring": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale nostrils flaring"
+            },
+            "mouth/mouth-scale-horiz": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale horizontally"
+            },
+            "mouth/mouth-scale-vert": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale vertically"
+            },
+            "mouth/mouth-scale-depth": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale depth"
+            },
+            "mouth/mouth-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move horizontally"
+            },
+            "mouth/mouth-trans:down|up": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move vertically (down/up)"
+            },
+            "mouth/mouth-trans:backward|forward": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move depth (backward/forward)"
+            },
+            "mouth/mouth-lowerlip-height": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale lowerlip height"
+            },
+            "mouth/mouth-lowerlip-width": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale lowerlip width"
+            },
+            "mouth/mouth-upperlip-height": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale upperlip height"
+            },
+            "mouth/mouth-upperlip-width": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale upperlip width"
+            },
+            "mouth/mouth-cupidsbow-width": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Cupid's bow width"
+            },
+            "mouth/mouth-dimples": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Dimples"
+            },
+            "mouth/mouth-laugh-lines": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Laugh-lines"
+            },
+            "mouth/mouth-lowerlip-ext": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerlip curved shape"
+            },
+            "mouth/mouth-angles": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move corners vert."
+            },
+            "mouth/mouth-lowerlip-middle": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale middle lowerlip"
+            },
+            "mouth/mouth-lowerlip-volume": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale lowerlip volume"
+            },
+            "mouth/mouth-philtrum-volume": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale philtrum volume"
+            },
+            "mouth/mouth-upperlip-volume": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale upperlip volume"
+            },
+            "mouth/mouth-upperlip-ext": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperlip curved shape"
+            },
+            "mouth/mouth-upperlip-middle": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale middle upperlip"
+            },
+            "mouth/mouth-cupidsbow": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Cupid's bow shape"
+            },
+            "ears/ear-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move depth"
+            },
+            "ears/ear-scale": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale ear"
+            },
+            "ears/ear-scale-vert": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale height"
+            },
+            "ears/ear-lobe": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale lobe"
+            },
+            "ears/ear-shape": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Ear shape (pointed-triangle)"
+            },
+            "ears/ear-rot": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Ear rotation"
+            },
+            "ears/ear-scale-depth": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale width"
+            },
+            "ears/ear-wing": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Ear wing-shaped"
+            },
+            "ears/ear-flap": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Ear flapped"
+            },
+            "ears/ear-trans:backward|forward": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move depth (backward/forward)"
+            },
+            "ears/ear-scale:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale ear (decr/incr)"
+            },
+            "ears/ear-scale-vert:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale height (decr/incr)"
+            },
+            "ears/ear-lobe:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale lobe (decr/incr)"
+            },
+            "ears/ear-shape:pointed|triangle": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Ear shape (pointed-triangle) (pointed/triangle)"
+            },
+            "ears/ear-rot:backward|forward": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Ear rotation (backward/forward)"
+            },
+            "ears/ear-scale-depth:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale width (decr/incr)"
+            },
+            "ears/ear-wing:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Ear wing-shaped (decr/incr)"
+            },
+            "ears/ear-flap:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Ear flapped (decr/incr)"
+            },
+            "chin/chin-jaw-drop": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Tone of side chin"
+            },
+            "chin/chin-cleft": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Cleft chin"
+            },
+            "chin/chin-prominent": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale chin prominence"
+            },
+            "chin/chin-width": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale chin width"
+            },
+            "chin/chin-height": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale chin height"
+            },
+            "chin/chin-bones": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale chin angular"
+            },
+            "chin/chin-prognathism": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale chin prognathism"
+            },
+            "cheek/cheek-volume": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Cheek outer volume"
+            },
+            "cheek/cheek-bones": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale cheek prominence"
+            },
+            "cheek/cheek-inner": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Cheek inner volume"
+            },
+            "cheek/cheek-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move vertically"
+            },
+            "cheek/cheek-volume:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Cheek outer volume (decr/incr)"
+            },
+            "cheek/cheek-bones:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale cheek prominence (decr/incr)"
+            },
+            "cheek/cheek-inner:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Cheek inner volume (decr/incr)"
+            },
+            "cheek/cheek-trans:down|up": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move vertically (down/up)"
+            },
+            "torso/torso-scale-depth": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale depth"
+            },
+            "torso/torso-scale-horiz": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale horizontally"
+            },
+            "torso/torso-scale-vert": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale vertically"
+            },
+            "torso/torso-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move horizontally"
+            },
+            "torso/torso-trans:down|up": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move vertically (down/up)"
+            },
+            "torso/torso-trans:backward|forward": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move depth (backward/forward)"
+            },
+            "torso/torso-vshape": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale cone-shape"
+            },
+            "torso/torso-muscle-dorsi": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Dorsi muscle"
+            },
+            "torso/torso-muscle-pectoral": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Pectoral muscle"
+            },
+            "hip/hip-scale-depth": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale depth"
+            },
+            "hip/hip-scale-horiz": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale horizontally"
+            },
+            "hip/hip-scale-vert": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale vertically"
+            },
+            "hip/hip-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move horizontally"
+            },
+            "hip/hip-trans:down|up": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move vertically (down/up)"
+            },
+            "hip/hip-trans:backward|forward": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move depth (backward/forward)"
+            },
+            "hip/hip-waist": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Waist vertical position"
+            },
+            "stomach/stomach-tone": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Muscular tone"
+            },
+            "stomach/stomach-pregnant": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Pregnancy shape"
+            },
+            "stomach/stomach-navel": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Navel bump"
+            },
+            "stomach/stomach-navel:down|up": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Navel position (down/up)"
+            },
+            "buttocks/buttocks-volume": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Buttocks volume"
+            },
+            "armslegs/hand-fingers-distance": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Fingers distance"
+            },
+            "armslegs/hand-fingers-diameter": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Fingers diameter"
+            },
+            "armslegs/hand-fingers-length": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Fingers length"
+            },
+            "armslegs/hand-scale": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale hand"
+            },
+            "armslegs/hand-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Hand position"
+            },
+            "armslegs/hand-fingers-distance:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Fingers distance (decr/incr)"
+            },
+            "armslegs/hand-fingers-diameter:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Fingers diameter (decr/incr)"
+            },
+            "armslegs/hand-fingers-length:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Fingers length (decr/incr)"
+            },
+            "armslegs/hand-scale:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale hand (decr/incr)"
+            },
+            "armslegs/hand-trans:in|out": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Hand position (in/out)"
+            },
+            "armslegs/foot-scale": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale foot"
+            },
+            "armslegs/foot-trans": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move horizontally"
+            },
+            "armslegs/foot-scale:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Scale foot (decr/incr)"
+            },
+            "armslegs/foot-trans:in|out": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move horizontally (in/out)"
+            },
+            "armslegs/upperarm-shoulder-muscle": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Shoulder muscle mass"
+            },
+            "armslegs/upperarm-shoulder-muscle:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Shoulder muscle mass (decr/incr)"
+            },
+            "armslegs/lowerarm-scale-depth": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerarm thickness 1"
+            },
+            "armslegs/lowerarm-scale-horiz": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerarm length"
+            },
+            "armslegs/lowerarm-scale-vert": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerarm thickness 2"
+            },
+            "armslegs/lowerarm-fat": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerarm skinny-fat"
+            },
+            "armslegs/lowerarm-muscle": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerarm muscles"
+            },
+            "armslegs/upperarm-scale-depth": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperarm thickness 1"
+            },
+            "armslegs/upperarm-scale-horiz": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperarm length"
+            },
+            "armslegs/upperarm-scale-vert": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperarm thickness 2"
+            },
+            "armslegs/upperarm-fat": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperarm skinny-fat"
+            },
+            "armslegs/upperarm-muscle": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperarm muscles"
+            },
+            "armslegs/lowerarm-scale-depth:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerarm thickness 1 (decr/incr)"
+            },
+            "armslegs/lowerarm-scale-horiz:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerarm length (decr/incr)"
+            },
+            "armslegs/lowerarm-scale-vert:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerarm thickness 2 (decr/incr)"
+            },
+            "armslegs/lowerarm-fat:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerarm skinny-fat (decr/incr)"
+            },
+            "armslegs/lowerarm-muscle:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerarm muscles (decr/incr)"
+            },
+            "armslegs/upperarm-scale-depth:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperarm thickness 1 (decr/incr)"
+            },
+            "armslegs/upperarm-scale-horiz:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperarm length (decr/incr)"
+            },
+            "armslegs/upperarm-scale-vert:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperarm thickness 2 (decr/incr)"
+            },
+            "armslegs/upperarm-fat:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperarm skinny-fat (decr/incr)"
+            },
+            "armslegs/upperarm-muscle:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperarm muscles (decr/incr)"
+            },
+            "armslegs/leg-valgus": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move knee horizontally"
+            },
+            "armslegs/lowerleg-scale-depth": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerleg scale depth"
+            },
+            "armslegs/lowerleg-scale-horiz": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerleg scale horizontally"
+            },
+            "armslegs/lowerleg-fat": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerleg skinny-fat"
+            },
+            "armslegs/lowerleg-muscle": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerleg muscle"
+            },
+            "armslegs/upperleg-scale-depth": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperleg scale depth"
+            },
+            "armslegs/upperleg-scale-horiz": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperleg scale horizontally"
+            },
+            "armslegs/upperleg-scale-vert": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move knee vertically"
+            },
+            "armslegs/upperleg-fat": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperleg skinny-fat"
+            },
+            "armslegs/upperleg-muscle": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperleg muscle"
+            },
+            "armslegs/leg-valgus:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move knee horizontally (decr/incr)"
+            },
+            "armslegs/lowerleg-scale-depth:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerleg scale depth (decr/incr)"
+            },
+            "armslegs/lowerleg-scale-horiz:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerleg scale horizontally (decr/incr)"
+            },
+            "armslegs/lowerleg-fat:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerleg skinny-fat (decr/incr)"
+            },
+            "armslegs/lowerleg-muscle:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerleg muscle (decr/incr)"
+            },
+            "armslegs/upperleg-scale-depth:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperleg scale depth (decr/incr)"
+            },
+            "armslegs/upperleg-scale-horiz:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperleg scale horizontally (decr/incr)"
+            },
+            "armslegs/upperleg-scale-vert:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Move knee vertically (decr/incr)"
+            },
+            "armslegs/upperleg-fat:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperleg skinny-fat (decr/incr)"
+            },
+            "armslegs/upperleg-muscle:decr|incr": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperleg muscle (decr/incr)"
+            },
+            "armslegs/upperlegs-height": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Upperlegs height"
+            },
+            "armslegs/lowerlegs-height": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "description": "Lowerlegs height"
+            }
+          },
+          "description": "Fine body sliders by ID, such as nose or jaw shapes: -1..1 for two-way sliders, 0..1 for one-way."
+        },
+        "skin": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "middleage_african_female",
+            "middleage_african_male",
+            "middleage_asian_female",
+            "middleage_asian_male",
+            "middleage_caucasian_female",
+            "middleage_caucasian_male",
+            "old_african_female",
+            "old_african_male",
+            "old_asian_female",
+            "old_asian_male",
+            "old_caucasian_female",
+            "old_caucasian_male",
+            "young_african_female",
+            "young_african_male",
+            "young_asian_female",
+            "young_asian_male",
+            "young_caucasian_female",
+            "young_caucasian_female2",
+            "young_caucasian_male",
+            "young_caucasian_male2"
+          ],
+          "description": "A skin texture ID, or auto to choose one from the ethnic mix."
+        },
+        "skinTint": {
+          "type": "string",
+          "pattern": "^#[a-fA-F0-9]{6}$",
+          "description": "#RRGGBB multiplied over the skin texture: it can only darken. #ffffff leaves it unchanged."
+        },
+        "eyes": {
+          "type": "string",
+          "enum": [
+            "blue",
+            "bluegreen",
+            "brown",
+            "darkbrown",
+            "blackbrown",
+            "brownlight",
+            "deepblue",
+            "green",
+            "grey",
+            "ice",
+            "lightblue"
+          ]
+        },
+        "eyebrows": {
+          "type": "string",
+          "enum": [
+            "none",
+            "eyebrow001",
+            "eyebrow002",
+            "eyebrow003",
+            "eyebrow004",
+            "eyebrow005",
+            "eyebrow006",
+            "eyebrow007",
+            "eyebrow008",
+            "eyebrow009",
+            "eyebrow010",
+            "eyebrow011",
+            "eyebrow012"
+          ]
+        },
+        "eyelashes": {
+          "type": "string",
+          "enum": [
+            "none",
+            "eyelashes01",
+            "eyelashes02",
+            "eyelashes03",
+            "eyelashes04"
+          ]
+        },
+        "hair": {
+          "type": "string",
+          "enum": [
+            "none",
+            "afro01",
+            "bob01",
+            "bob02",
+            "braid01",
+            "long01",
+            "ponytail01",
+            "short01",
+            "short02",
+            "short03",
+            "short04",
+            "buzz",
+            "mohawk",
+            "cornrows",
+            "box_braids"
+          ]
+        },
+        "hairTint": {
+          "type": "string",
+          "pattern": "^#[a-fA-F0-9]{6}$",
+          "description": "#RRGGBB multiplied over a textured hairstyle: it can only darken. #ffffff leaves it unchanged."
+        },
+        "hairColor": {
+          "type": "string",
+          "pattern": "^#[a-fA-F0-9]{6}$",
+          "description": "#RRGGBB colour of the generated hairstyles, such as braids, buzz cuts and spikes."
+        },
+        "facialHair": {
+          "type": "string",
+          "enum": [
+            "none",
+            "stubble",
+            "mustache",
+            "mustache_stubble",
+            "goatee",
+            "short_beard",
+            "full_beard"
+          ]
+        },
+        "beardColor": {
+          "type": "string",
+          "pattern": "^#[a-fA-F0-9]{6}$",
+          "description": "#RRGGBB colour of facial hair."
+        },
+        "tattoos": {
+          "type": "array",
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "armband_l",
+              "sleeve_r",
+              "forearm_l",
+              "chest",
+              "back",
+              "face_marks"
+            ]
+          }
+        },
+        "tattooInk": {
+          "type": "string",
+          "pattern": "^#[a-fA-F0-9]{6}$",
+          "description": "#RRGGBB ink colour for tattoos."
+        },
+        "earrings": {
+          "type": "string",
+          "enum": [
+            "none",
+            "studs",
+            "pearl_drops",
+            "small_hoops",
+            "big_hoops"
+          ]
+        },
+        "earringMetal": {
+          "type": "string",
+          "enum": [
+            "gold",
+            "silver"
+          ]
+        },
+        "outfit": {
+          "type": "string",
+          "enum": [
+            "none",
+            "female_casualsuit01",
+            "female_casualsuit02",
+            "female_elegantsuit01",
+            "female_sportsuit01",
+            "male_casualsuit01",
+            "male_casualsuit02",
+            "male_casualsuit03",
+            "male_casualsuit04",
+            "male_casualsuit05",
+            "male_casualsuit06",
+            "male_elegantsuit01",
+            "male_worksuit01",
+            "female_sportsuit01_racer",
+            "set_suit_tie",
+            "set_clergy",
+            "set_pantsuit",
+            "set_thobe",
+            "set_ankara_gown",
+            "set_ankara_peplum",
+            "set_aso_ebi",
+            "set_street_tee_jeans",
+            "set_gold_bikini",
+            "set_prison_jumpsuit",
+            "set_pastel_suit",
+            "set_wedding_gown",
+            "set_cocktail_dress"
+          ],
+          "description": "A complete outfit or outfit set ID, or none to dress with separate pieces (top, jacket, bottom, shoes, hat)."
+        },
+        "top": {
+          "type": "string",
+          "enum": [
+            "none",
+            "tank_top",
+            "singlet",
+            "fatigue_shirt",
+            "uniform_shirt",
+            "uniform_shirt_long",
+            "techwear_jacket",
+            "tattered_shirt",
+            "tunic",
+            "long_tunic",
+            "ankara_gown",
+            "peplum_top",
+            "lace_top",
+            "sheriff_shirt",
+            "wedding_gown",
+            "cocktail_dress",
+            "bikini_top",
+            "oversized_tee",
+            "football_shirt",
+            "basketball_jersey",
+            "chef_jacket",
+            "prison_top",
+            "uniform_camp_shirt",
+            "school_shirt",
+            "clerical_shirt",
+            "silk_blouse",
+            "camp_shirt",
+            "tropical_short_shirt",
+            "racer_casual_shirt",
+            "scrub_top",
+            "thobe",
+            "suit_shirt_tie"
+          ]
+        },
+        "jacket": {
+          "type": "string",
+          "enum": [
+            "none",
+            "racing_jacket",
+            "racing_jacket_long",
+            "biker_vest",
+            "fur_jacket",
+            "suit_jacket",
+            "overcoat"
+          ]
+        },
+        "bottom": {
+          "type": "string",
+          "enum": [
+            "none",
+            "briefs",
+            "cargo_shorts",
+            "resort_shorts",
+            "fatigue_pants",
+            "cargo_pants",
+            "uniform_trousers",
+            "techwear_pants",
+            "tattered_pants",
+            "trousers",
+            "wrapper_long",
+            "wrapper_knee",
+            "hide_aprons",
+            "loincloth",
+            "pencil_skirt_maxi",
+            "pencil_skirt_midi",
+            "sheriff_trousers",
+            "bikini_bottom",
+            "baggy_jeans",
+            "prison_trousers",
+            "fitted_mini_skirt",
+            "suit_trousers"
+          ]
+        },
+        "underwear": {
+          "type": "boolean",
+          "description": "Briefs under the clothes. Only adults (18+) can switch it off."
+        },
+        "accessories": {
+          "type": "array",
+          "maxItems": 40,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "belt",
+              "utility_belt",
+              "waist_sash",
+              "shoulder_drape",
+              "crossed_straps",
+              "amulet_bandolier",
+              "leather_armor",
+              "tactical_vest",
+              "reflective_vest",
+              "beret",
+              "bead_collar",
+              "bead_necklace",
+              "cowrie_necklace",
+              "amulets",
+              "arm_cuffs",
+              "bead_armbands",
+              "cowrie_armbands",
+              "arm_guards",
+              "fur_bands",
+              "feather_headband",
+              "bead_headband",
+              "fila_cap",
+              "helmet",
+              "open_face_helmet",
+              "visor",
+              "neon_accents",
+              "goggles",
+              "arm_wraps",
+              "watch",
+              "gele",
+              "cowboy_hat",
+              "bridal_veil",
+              "coral_beads",
+              "gold_necklace",
+              "gold_necklace_long",
+              "fine_pendant",
+              "silver_cross",
+              "pearl_necklace",
+              "gold_chains",
+              "cuban_chain",
+              "gloves",
+              "sport_gloves",
+              "keeper_gloves",
+              "gold_ring",
+              "bangles",
+              "watch_gold",
+              "watch_silver",
+              "wrist_beads",
+              "apron",
+              "headphones",
+              "camera",
+              "sport_socks",
+              "neck_scarf",
+              "stethoscope",
+              "clown_face",
+              "face_mask",
+              "police_badge",
+              "police_nameplate",
+              "medical_emblem",
+              "epaulette_accent",
+              "earpiece",
+              "sunglasses",
+              "sunglasses_sleek",
+              "aviators"
+            ]
+          }
+        },
+        "garmentStyles": {
+          "type": "object",
+          "maxProperties": 60,
+          "propertyNames": {
+            "enum": [
+              "tank_top",
+              "singlet",
+              "fatigue_shirt",
+              "uniform_shirt",
+              "uniform_shirt_long",
+              "techwear_jacket",
+              "tattered_shirt",
+              "tunic",
+              "long_tunic",
+              "briefs",
+              "cargo_shorts",
+              "resort_shorts",
+              "fatigue_pants",
+              "cargo_pants",
+              "uniform_trousers",
+              "techwear_pants",
+              "tattered_pants",
+              "trousers",
+              "wrapper_long",
+              "wrapper_knee",
+              "hide_aprons",
+              "loincloth",
+              "belt",
+              "utility_belt",
+              "waist_sash",
+              "shoulder_drape",
+              "crossed_straps",
+              "amulet_bandolier",
+              "leather_armor",
+              "tactical_vest",
+              "reflective_vest",
+              "beret",
+              "bead_collar",
+              "bead_necklace",
+              "cowrie_necklace",
+              "amulets",
+              "arm_cuffs",
+              "bead_armbands",
+              "cowrie_armbands",
+              "arm_guards",
+              "fur_bands",
+              "feather_headband",
+              "bead_headband",
+              "fila_cap",
+              "helmet",
+              "open_face_helmet",
+              "visor",
+              "neon_accents",
+              "goggles",
+              "arm_wraps",
+              "watch",
+              "ankara_gown",
+              "peplum_top",
+              "lace_top",
+              "pencil_skirt_maxi",
+              "pencil_skirt_midi",
+              "gele",
+              "sheriff_shirt",
+              "sheriff_trousers",
+              "cowboy_hat",
+              "wedding_gown",
+              "cocktail_dress",
+              "bridal_veil",
+              "coral_beads",
+              "gold_necklace",
+              "gold_necklace_long",
+              "fine_pendant",
+              "silver_cross",
+              "pearl_necklace",
+              "gold_chains",
+              "cuban_chain",
+              "gloves",
+              "sport_gloves",
+              "keeper_gloves",
+              "gold_ring",
+              "bangles",
+              "watch_gold",
+              "watch_silver",
+              "wrist_beads",
+              "bikini_top",
+              "bikini_bottom",
+              "oversized_tee",
+              "baggy_jeans",
+              "baseball_cap",
+              "football_shirt",
+              "basketball_jersey",
+              "chef_jacket",
+              "chef_hat",
+              "apron",
+              "headphones",
+              "camera",
+              "sport_socks",
+              "prison_top",
+              "prison_trousers",
+              "uniform_camp_shirt",
+              "school_shirt",
+              "clerical_shirt",
+              "silk_blouse",
+              "camp_shirt",
+              "tropical_short_shirt",
+              "racer_casual_shirt",
+              "fitted_mini_skirt",
+              "racing_jacket",
+              "racing_jacket_long",
+              "biker_vest",
+              "fur_jacket",
+              "neck_scarf",
+              "hard_hat",
+              "scrub_top",
+              "stethoscope",
+              "clown_face",
+              "face_mask",
+              "police_badge",
+              "police_nameplate",
+              "medical_emblem",
+              "epaulette_accent",
+              "thobe",
+              "keffiyeh",
+              "earpiece",
+              "suit_shirt_tie",
+              "suit_jacket",
+              "overcoat",
+              "suit_trousers",
+              "backpack",
+              "sunglasses",
+              "sunglasses_sleek",
+              "aviators",
+              "heels",
+              "sneakers",
+              "loafers",
+              "oxfords",
+              "slides",
+              "set_suit_tie",
+              "set_clergy",
+              "set_pantsuit",
+              "set_thobe",
+              "set_ankara_gown",
+              "set_ankara_peplum",
+              "set_aso_ebi",
+              "set_street_tee_jeans",
+              "set_gold_bikini",
+              "set_prison_jumpsuit",
+              "set_pastel_suit",
+              "set_wedding_gown",
+              "set_cocktail_dress",
+              "straw_tote",
+              "handbag",
+              "briefcase",
+              "parachute",
+              "parcel",
+              "head_load",
+              "phone",
+              "broom",
+              "shoes03"
+            ]
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "pattern": {
+                "type": "string",
+                "enum": [
+                  "solid",
+                  "khaki",
+                  "camo",
+                  "kente",
+                  "asooke",
+                  "ankara",
+                  "ankara_floral",
+                  "ankara_web",
+                  "adire",
+                  "adire_panel",
+                  "lace",
+                  "damask",
+                  "pleated",
+                  "foil",
+                  "denim",
+                  "jersey",
+                  "workwear",
+                  "tropical",
+                  "resort_geo",
+                  "linen",
+                  "suiting",
+                  "nappa",
+                  "patent",
+                  "shemagh",
+                  "satin",
+                  "striped",
+                  "stripes",
+                  "hoops",
+                  "sport_print",
+                  "pinstripe",
+                  "shuka",
+                  "leather",
+                  "hide",
+                  "leopard",
+                  "techwear",
+                  "tattered"
+                ]
+              },
+              "color": {
+                "type": "string",
+                "pattern": "^#[a-fA-F0-9]{6}$"
+              },
+              "color2": {
+                "type": "string",
+                "pattern": "^#[a-fA-F0-9]{6}$"
+              },
+              "number": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 99,
+                "description": "Jersey number (football_shirt, basketball_jersey)."
+              }
+            }
+          },
+          "description": "Pattern and colour per garment ID: {\"pattern\": ..., \"color\": \"#RRGGBB\", \"color2\": \"#RRGGBB\"}; jerseys (football_shirt, basketball_jersey) also take \"number\" (0-99)."
+        },
+        "shoes": {
+          "type": "string",
+          "enum": [
+            "none",
+            "sandals",
+            "combat_boots",
+            "flipflops",
+            "shoes01",
+            "shoes02",
+            "shoes03",
+            "shoes04",
+            "shoes05",
+            "shoes06",
+            "heels",
+            "sneakers",
+            "loafers",
+            "oxfords",
+            "slides"
+          ]
+        },
+        "hat": {
+          "type": "string",
+          "enum": [
+            "none",
+            "fedora01",
+            "fedora_cocked",
+            "baseball_cap",
+            "chef_hat",
+            "hard_hat",
+            "keffiyeh"
+          ]
+        },
+        "outfitTint": {
+          "type": "string",
+          "pattern": "^#[a-fA-F0-9]{6}$",
+          "description": "#RRGGBB multiplied over the outfit texture: it can only darken. #ffffff leaves it unchanged."
+        },
+        "detail": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "description": "low: game proxy, about 5-10k triangles. medium: full body, about 30-40k. high: smoothed body and clothing, about 100-120k."
+        },
+        "rig": {
+          "type": "string",
+          "enum": [
+            "none",
+            "game",
+            "game_lite",
+            "full"
+          ],
+          "description": "game: 65 bones with Mixamo names (retargets to Mixamo, Unity Humanoid and Unreal). game_lite: 25 bones, no fingers. full: 163 MakeHuman bones including the face. none: no skeleton."
+        },
+        "faceBones": {
+          "type": "boolean",
+          "description": "Adds jaw and eye bones for facial animation."
+        },
+        "restPose": {
+          "type": "string",
+          "enum": [
+            "A",
+            "T"
+          ],
+          "description": "A: the natural A-pose. T: a T-pose, as Mixamo and Unity Humanoid expect."
+        },
+        "animations": {
+          "type": "boolean",
+          "description": "Include the animation clips in GLB and FBX exports."
+        },
+        "weapon": {
+          "type": "string",
+          "enum": [
+            "none",
+            "rifle",
+            "pistol",
+            "sword",
+            "knife",
+            "grenade"
+          ]
+        },
+        "carry": {
+          "type": "string",
+          "enum": [
+            "none",
+            "straw_tote",
+            "handbag",
+            "briefcase",
+            "backpack",
+            "parcel",
+            "parachute",
+            "head_load",
+            "phone",
+            "broom"
+          ]
+        },
+        "vehicle": {
+          "type": "string",
+          "enum": [
+            "none",
+            "auto",
+            "bicycle",
+            "car",
+            "sports_car",
+            "suv",
+            "motorcycle",
+            "horse",
+            "canoe",
+            "kayak",
+            "rowboat",
+            "motorboat",
+            "helicopter",
+            "pickup",
+            "tank",
+            "jet"
+          ],
+          "description": "A vehicle fitted to the rider and exported as its own file; auto picks the one the riding clips need."
+        },
+        "vehicleStyle": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "color": {
+              "type": "string",
+              "pattern": "^#[a-fA-F0-9]{6}$"
+            },
+            "accentColor": {
+              "type": "string",
+              "pattern": "^#[a-fA-F0-9]{6}$"
+            },
+            "seatColor": {
+              "type": "string",
+              "pattern": "^#[a-fA-F0-9]{6}$"
+            },
+            "finish": {
+              "type": "string",
+              "enum": [
+                "matte",
+                "satin",
+                "gloss"
+              ]
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "classic",
+                "sport"
+              ]
+            },
+            "body": {
+              "type": "string",
+              "enum": [
+                "danfo",
+                "van",
+                "bus",
+                "truck",
+                "keke",
+                "quad",
+                "scooter",
+                "kart",
+                "saloon",
+                "muscle"
+              ]
+            },
+            "livery": {
+              "type": "string",
+              "enum": [
+                "none",
+                "stripes",
+                "racing",
+                "police",
+                "taxi"
+              ]
+            },
+            "number": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 99
+            },
+            "deliveryBox": {
+              "type": "boolean"
+            }
+          }
+        },
+        "expression": {
+          "type": "string",
+          "enum": [
+            "neutral",
+            "happy",
+            "laughing",
+            "angry",
+            "sad",
+            "crying",
+            "surprised",
+            "afraid",
+            "determined"
+          ]
+        },
+        "faceShapes": {
+          "type": "boolean",
+          "description": "Export facial blend shapes (expressions, blinking). Off bakes the expression into the mesh."
+        },
+        "speechShapes": {
+          "type": "boolean",
+          "description": "With faceShapes: also export the mouth shapes for lip-sync."
+        },
+        "teeth": {
+          "type": "string",
+          "enum": [
+            "none",
+            "teeth_base",
+            "teeth_shape01",
+            "teeth_shape02",
+            "teeth_shape03",
+            "teeth_shape04",
+            "teeth_shape05"
+          ]
+        },
+        "tongue": {
+          "type": "boolean"
+        },
+        "ageYears": {
+          "type": "number",
+          "minimum": 12,
+          "maximum": 90,
+          "description": "Human years; use instead of normalized age, never both."
+        }
+      },
+      "not": {
+        "required": [
+          "age",
+          "ageYears"
+        ]
+      }
+    }
+  }
+}

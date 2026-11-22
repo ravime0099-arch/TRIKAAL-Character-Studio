@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Architecture: Ara 3D Gen docs</title>
+<meta name="description" content="buildHuman() (src/core/human.ts) runs in a Web Worker in the app (src/app/worker.ts), and directly in Node for the command line and tests. In the browser (" />
+<link rel="canonical" href="https://ara3dgen.com/docs/architecture/" />
+<link rel="icon" href="/TRIKAAL-Character-Studio/favicon.ico" sizes="48x48" />
+<link rel="icon" href="/TRIKAAL-Character-Studio/favicon.svg" type="image/svg+xml" />
+<meta property="og:title" content="Architecture: Ara 3D Gen docs" />
+<meta property="og:description" content="buildHuman() (src/core/human.ts) runs in a Web Worker in the app (src/app/worker.ts), and directly in Node for the command line and tests. In the browser (" />
+<meta property="og:image" content="https://ara3dgen.com/og.jpg" />
+<meta name="theme-color" content="#0f1116" />
+<style>
+:root { --bg:#0f1116; --panel:#171c26; --line:#262d3b; --text:#e9edf4; --muted:#9aa4b5; --accent:#5b8cff; --accent-2:#9db9ff; color-scheme: dark;
+  font: 17px/1.65 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; background: radial-gradient(1100px 600px at 75% -10%, rgba(91,140,255,.14), transparent 60%), var(--bg); color: var(--text); }
+a { color: var(--accent-2); }
+.nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 24px; padding: 14px clamp(16px,4vw,48px);
+  background: rgba(15,17,22,.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(38,45,59,.6); }
+.brand { display: inline-flex; align-items: center; gap: 0.28em; color: var(--text); text-decoration: none; font-weight: 650; font-size: 19px; letter-spacing: -0.02em; white-space: nowrap; }
+.brand img { margin-right: 6px; }
+.brand span { color: var(--muted); }
+.nav nav { display: flex; gap: 20px; margin-left: auto; }
+.nav nav a { color: var(--muted); text-decoration: none; font-size: 15px; }
+.nav nav a:hover, .nav nav a.on { color: var(--text); }
+.btn { display: inline-block; padding: 9px 14px; border-radius: 10px; background: var(--accent); color: #fff; font: 600 14px/1 system-ui, sans-serif; text-decoration: none; white-space: nowrap; }
+.wrap { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 48px; max-width: 1180px; margin: 0 auto; padding: 40px clamp(16px,4vw,48px) 80px; }
+.side { position: sticky; top: 84px; align-self: start; font-size: 15px; }
+.side a { display: block; padding: 7px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; }
+.side a:hover { color: var(--text); background: rgba(255,255,255,.04); }
+.side a.on { color: var(--text); background: rgba(91,140,255,.14); }
+.side .sub a { padding: 4px 12px 4px 24px; font-size: 14px; }
+article { min-width: 0; max-width: 820px; }
+article h1 { font-size: clamp(32px, 4.5vw, 46px); letter-spacing: -.02em; line-height: 1.1; margin: 0 0 20px; }
+article h2 { font-size: 28px; letter-spacing: -.01em; margin: 48px 0 14px; padding-top: 8px; border-top: 1px solid var(--line); line-height: 1.2; }
+article h3 { font-size: 20px; margin: 32px 0 10px; }
+h1, h2, h3 { position: relative; scroll-margin-top: 90px; }
+.anchor { position: absolute; left: -24px; color: var(--muted); text-decoration: none; opacity: 0; }
+h2:hover .anchor, h3:hover .anchor { opacity: 1; }
+p, ul, ol { margin: 0 0 16px; }
+li { margin: 4px 0; }
+code { font: 14.5px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; background: rgba(255,255,255,.06); padding: 2px 6px; border-radius: 6px; }
+pre { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; overflow-x: auto; margin: 0 0 20px; }
+pre code { background: none; padding: 0; font-size: 14px; }
+table { width: 100%; border-collapse: collapse; margin: 0 0 22px; font-size: 15px; display: block; overflow-x: auto; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-weight: 600; }
+.foot { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; display: flex; gap: 16px; flex-wrap: wrap; }
+.search { position: relative; margin: 0 0 14px; }
+.search input { width: 100%; padding: 9px 12px 9px 34px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--text); font: 15px system-ui, sans-serif; }
+.search input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.search svg { position: absolute; left: 11px; top: 11px; width: 15px; height: 15px; color: var(--muted); pointer-events: none; }
+.search kbd { position: absolute; right: 9px; top: 8px; padding: 1px 7px; border: 1px solid var(--line); border-radius: 6px; color: var(--muted); font: 12px/1.5 ui-monospace, Menlo, monospace; pointer-events: none; }
+.search input:focus ~ kbd, .search input:not(:placeholder-shown) ~ kbd { display: none; }
+.results { position: absolute; z-index: 20; top: calc(100% + 6px); left: 0; width: min(420px, calc(100vw - 32px)); max-height: min(70vh, 520px); overflow-y: auto;
+  padding: 6px; border: 1px solid var(--line); border-radius: 12px; background: #141924; box-shadow: 0 18px 48px rgba(0,0,0,.45); }
+.results[hidden] { display: none; }
+.side .results a { display: block; padding: 9px 10px; border-radius: 8px; color: var(--text); background: none; }
+.side .results a[aria-selected="true"], .side .results a:hover { background: rgba(91,140,255,.16); }
+.results b { display: block; font-weight: 600; font-size: 15px; }
+.results small { display: block; color: var(--muted); font-size: 12px; margin-top: 1px; }
+.results span { display: block; color: var(--muted); font-size: 13.5px; line-height: 1.45; margin-top: 3px; overflow-wrap: anywhere; }
+.results mark { background: rgba(91,140,255,.3); color: var(--text); border-radius: 3px; padding: 0 1px; }
+.results p { margin: 0; padding: 10px; color: var(--muted); font-size: 14px; }
+@media (max-width: 860px) {
+  .search { width: 100%; }
+  .wrap { grid-template-columns: 1fr; gap: 20px; padding-top: 24px; }
+  .side { position: static; display: flex; flex-wrap: wrap; gap: 4px; }
+  .side .sub { display: none; }
+  .side a { padding: 6px 10px; background: rgba(255,255,255,.04); }
+  .nav nav { display: none; }
+  .anchor { display: none; }
+}</style>
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="/TRIKAAL-Character-Studio/"><img src="/TRIKAAL-Character-Studio/logo.svg" alt="" width="24" height="24" />Ara <span>3D Gen</span></a>
+  <nav><a href="/TRIKAAL-Character-Studio/#features">Features</a><a href="/TRIKAAL-Character-Studio/docs/" class="on">Docs</a><a href="https://github.com/olatunde85/3d-gen">GitHub</a></nav>
+  <a class="btn" href="/TRIKAAL-Character-Studio/app/">Open Builder</a>
+</header>
+<div class="wrap">
+  <aside class="side" aria-label="Documentation pages">
+    <div class="search" role="search">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6"/><path d="m13 13 5 5"/></svg>
+      <input id="docs-search" type="search" placeholder="Search the docs" autocomplete="off" spellcheck="false" aria-label="Search the docs" aria-controls="docs-results" aria-expanded="false" />
+      <kbd>/</kbd>
+      <div class="results" id="docs-results" role="listbox" hidden></div>
+    </div>
+    <a href="/TRIKAAL-Character-Studio/docs/">Overview</a><a href="/TRIKAAL-Character-Studio/docs/self-hosting/">Self-hosting</a><a href="/TRIKAAL-Character-Studio/docs/engines/">Using characters in your engine</a><a href="/TRIKAAL-Character-Studio/docs/characters/">Bodies, clothing and looks</a><a href="/TRIKAAL-Character-Studio/docs/faces/">Faces, expressions and lip-sync</a><a href="/TRIKAAL-Character-Studio/docs/animations/">Animations</a><a href="/TRIKAAL-Character-Studio/docs/rigging/">Rigging</a><a href="/TRIKAAL-Character-Studio/docs/exporting/">Exporting</a><a href="/TRIKAAL-Character-Studio/docs/studio/">Ara Studio</a><a href="/TRIKAAL-Character-Studio/docs/architecture/" class="on" aria-current="page">Architecture</a><div class="sub"><a href="#how-a-character-is-built">How a character is built</a><a href="#studio-scenes-and-direction">Studio scenes and direction</a></div><a href="/TRIKAAL-Character-Studio/docs/cli/">Command line (ara3d)</a><a href="/TRIKAAL-Character-Studio/docs/embed/">Embed a character (&lt;ara-character&gt;)</a><a href="/TRIKAAL-Character-Studio/docs/hosting-games/">Hosting your game</a><a href="/TRIKAAL-Character-Studio/docs/keys/">Your own AI and voices</a><a href="/TRIKAAL-Character-Studio/docs/library/">JavaScript library (ara3d)</a><a href="/TRIKAAL-Character-Studio/docs/mcp/">AI assistants (MCP)</a><a href="/TRIKAAL-Character-Studio/docs/play/">Ara Play</a><a href="/TRIKAAL-Character-Studio/docs/play-expansion/">Ara Play expansion</a><a href="/TRIKAAL-Character-Studio/docs/publishing/">Publishing service</a><a href="/TRIKAAL-Character-Studio/docs/studio-location-maps/">Location staging maps</a>
+  </aside>
+  <article>
+<h1 id="architecture"><a class="anchor" href="#architecture" aria-hidden="true">#</a>Architecture</h1>
+<pre><code>scripts/build-assets.ts   MakeHuman data -&gt; public/assets (packs, textures, thumbnails, catalog.json)
+scripts/build-web-assets.ts  public/assets -&gt; public/assets/web (one small file per body shape, 1024-px textures)
+scripts/build-mocap.ts    CMU motion capture -&gt; src/core/anim/clips/mocap-data.ts
+scripts/build-docs.ts     docs/*.md -&gt; dist/docs/ (these pages on the website)
+src/core/
+  assets.ts    asset pack formats + AssetLibrary (fetch in browser, fs in Node)
+  pack.ts      tiny gzip&#39;d binary container (JSON header + typed arrays)
+  params.ts    HumanParams, presets, seeded randomizer
+  morph.ts     macro + detail-slider target weighting, target application
+  human.ts     buildHuman(): morph, proxy fitting, subdivision, materials, skeleton
+  face.ts      facial blend shapes, expressions, blink calibration, lip sealing
+  geometry.ts  compaction, Catmull-Clark subdivision, normals
+  mesh.ts      MeshData (multi-material, triangles + original polygons)
+  garments/    procedural clothing (shells, hull rings, generated fabrics)
+  looks/       tattoos + stubble/shaved scalps (skin overlay), procedural hairstyles, beards, earrings
+  props/       weapons, carried bags/parcel, fitted procedural vehicles and animated rigid prop exports
+  rig/         skeletons, auto-skinning, T-pose, WeaponR socket
+  anim/        clips, motion-capture retargeting, and the shared evaluator (FK, arm IK, grounding)
+src/export/    glb.ts, fbx.ts (binary writer), obj.ts, plan.ts, index.ts (bundling)
+src/app/       three.js viewer, generation worker
+  ui/          the app&#39;s UI, one module per part (sidebar, animation bar, export panel, share dialog,
+               header), wired together in main.ts through the store&#39;s events (ui/store.ts)
+src/studio/    scene recipes, fixed-time direction, procedural sets, video encoding and Studio UI
+src/landing/   the landing page
+</code></pre>
+<h2 id="how-a-character-is-built"><a class="anchor" href="#how-a-character-is-built" aria-hidden="true">#</a>How a character is built</h2>
+<p><code>buildHuman()</code> (<code>src/core/human.ts</code>) runs in a Web Worker in the app (<code>src/app/worker.ts</code>), and directly in Node for the command line and tests. In the browser (the builder, Studio, Play and the ara3d library), the worker downloads only the body shapes each character uses, from <code>assets/web/</code>, before building it; Node reads the full <code>targets.pack</code>.</p>
+<ol>
+<li>Morph the base mesh from the parameters: macro controls plus detail sliders.</li>
+<li>Fit the proxies (eyes, brows, lashes, teeth, tongue, hair, outfits, shoes) and grow or wrap the procedural garments.</li>
+<li>Build the face&#39;s blend shapes, calibrate the blinks, and close lips that rest apart.</li>
+<li>Subdivide for high detail.</li>
+<li>Rig: place the skeleton on the body&#39;s joints, then skin every part.</li>
+<li>Assemble one multi-material mesh.</li>
+</ol>
+<p>The same parameters always give the same character, so <code>params.json</code> (and share links) regenerate it exactly.</p>
+<h2 id="studio-scenes-and-direction"><a class="anchor" href="#studio-scenes-and-direction" aria-hidden="true">#</a>Studio scenes and direction</h2>
+<p>Studio&#39;s version 2 project separates camera shots from actor performance tracks. Up to five actors are evaluated at the same explicit timestamp, while each keeps its own actions, character recipe, placement and detail. Version 1 projects migrate to the new schema on import.</p>
+<p><code>src/studio/catalog.ts</code> holds searchable location metadata. <code>sets.ts</code> dispatches to reusable scene-family builders and the explicit recipe registry in <code>sets/story/</code>; <code>sets/builder.ts</code> shares primitive geometry and materials within a set. Only the active set is instantiated. Set changes dispose owned geometries, materials and textures. Character changes rebuild only the affected actor, and replacement models are warmed before previous resources are released.</p>
+<p>The scene renderer fits the selected camera subject (one actor or the cast), then applies saved orbit/zoom offsets and camera motion. Preview, snapshots and video use this same evaluation. The video exporter waits for every actor&#39;s textures and prevents the preview loop from drawing during encoding.</p>
+<p>To add a location, add metadata to <code>catalog.ts</code> and use an existing family, or register a dedicated recipe in <code>sets/story/index.ts</code>. The story recipes share medical, sanitary, architectural and exterior details, low-poly repeated structures, and bounded procedural textures. Add floor-plan notes to the catalogue so Assist can stage actors in the real layout. Custom exterior recipes provide their own performance bounds so the generic outdoor extension cannot overwrite roads or pitches. Keep the performance area clear of props. Animation search reads the shared <code>CLIPS</code> registry directly; Studio uses the same list. The browser suite visits every location and checks resource cleanup as well as saved-project migration and movie playback. The focused <code>--cast</code> suite checks five actors, individual placement, framing, recovery and recorded-music MP4 export.</p>
+<p>The viewport has one controller for pointer gestures and selection-aware keyboard movement. Selection is stored in the local editor session, separate from the portable project; empty-background clicks and Escape clear it. A held arrow key is one cancellable, undoable actor transform; unselected arrows orbit the scene. Character transforms hold camera framing until they finish. Character picking raycasts the posed skinned meshes with conservative bounds from the current skeleton. Dragging projects an offset pointer onto the actor’s staging plane, so grabbing the torso does not produce a near-horizontal ground ray. Equipment edits rebuild Ara’s existing rigged prop geometry through the character recipe; other actors are reused. Selection rings are composited only onto the visible preview canvas after the clean film buffer is copied, keeping snapshots and video free of editing overlays.</p>
+<p>Studio&#39;s Assist and the builder&#39;s LLM Assist derive their portable text guides and JSON Schema from the same scene, preset, animation and equipment registries. <code>assist.ts</code> converts readable preset/equipment names into ordinary character recipes, rejects unknown fields and delegates canonical validation to <code>parseProject</code>. Both file and paste imports use one transactional loader; invalid inputs never allocate models, successful imports become one undoable edit, and saved projects retain the canonical version 2 format. <code>assist-ui.ts</code> handles the guide, optional current-film context, JSON preview and clipboard/download flows without calling any LLM service.</p>
+<p><code>session.ts</code> validates a versioned local recovery snapshot containing the film, bounded editor state and up to 30 undo entries. Drafts may be unfinished JSON; they are not imported during recovery. Completed edits save immediately; editor-only changes are debounced and flushed on page hide or reload. In-flight model builds keep the last completed snapshot. A separate canonical project copy supports legacy recovery. Incoming builder links are removed only after successful loading and saving, preventing refresh from replaying an import.</p>
+<p>Timed text lives in an optional <code>texts</code> array on version 2 film recipes; older projects normalize to an empty array. <code>text.ts</code> validates cues, imports/exports SRT and lays out captions/bubbles at explicit timestamps. Actor anchors project the posed head joint each frame. Typography is drawn into the clean output buffer before editor-only selection markers, so snapshots and encoded video match preview. Text cues can extend the film clock and are restored with editor sessions. The LLM schema and guide include this same text contract.</p>
+<p>The builder’s separate <code>character-assist.ts</code> contract reads the installed asset catalogues, garment definitions and parameter defaults. It validates readable character JSON before the regular Store/generation pipeline builds it. Its UI supports guide copy/download, file/paste input, Undo and local draft recovery; the character’s Studio return token is preserved. It accepts no film/timeline fields and makes no LLM API calls. <code>npm run test:character-assist</code> checks preset round trips, catalogue IDs and validation; browser checks also build characters through Assist and return an actor to Studio.</p>
+<p>Studio imports accept actor-level <code>params</code> (with an optional preset or encoded recipe as the base), and embedded character-builder specifications or raw parameter objects. The installed <code>Catalog</code> is supplied to both normal Open and Assist validation; custom settings pass through the builder’s existing <code>parseCharacterInput</code> before encoding into canonical actor recipes. The Studio guide embeds a shared <code>characterReference</code>, with character schemas factored into <code>$defs</code> to avoid duplicating the control catalogue. Current-film context expands encoded recipes into readable specifications without changing the saved project.</p>
+<p>Studio’s cast limit is shared by validation and the LLM schema. <code>staging.ts</code> allocates unique actor IDs, finds an unoccupied starting position, and computes arrangements for exactly two actors; the dropdown is hidden for larger casts, which are placed individually. Existing actors are reused during additions and changes. Removal repairs camera targets, text anchors and speech assignments; Undo restores the complete cast state.</p>
+<p>Recorded music is declared in <code>audio/tracks.ts</code>. <code>scripts/build-studio-music.ts</code> uses FFmpeg to create the versioned web files and credits from the supplied originals. The audio renderer fetches only the selected MP3, decodes it, and retains a single film-length (at most 60 seconds) stereo excerpt. Preview, WAV and MP4 share the same buffer scheduling, fades and speech ducking. Old synthetic selection IDs migrate to recorded-track IDs; there is no synthesis fallback. Preview cancellation also aborts a pending music request.</p>
+<p>Recorded one-shot effects are declared in <code>audio/effects-catalog.ts</code>; this registry supplies the editor, JSON validation, LLM schema and guide. <code>scripts/build-studio-effects.ts</code> converts the supplied <code>sound-for-ara</code> WAVs to small, versioned MP3s without trimming or stretching them. <code>audio/effects.ts</code> lazily fetches recordings into a bounded decoded cache and schedules independent gain/pan/playback-rate envelopes in the same offline mix as dialogue and music. <code>audio.effects</code> holds up to 64 cues (sound ID, optional actor tag, start/duration, source offset, speed, volume and pan). Actor tags are organizational, not spatial emitters; removing an actor preserves its effects as scene sounds. Project JSON and ZIPs reference these built-in IDs rather than duplicating their media. Effects need no speech generation and share audio-clock playback, WAV/MP4 export and session recovery.</p>
+<p>Animation travel is authored displacement evaluated at explicit film time. There is no collision detection, navigation mesh, pathfinding, obstacle avoidance or contact response against set geometry, props or other actors. The LLM guide names this limit and asks for clear paths or <code>move:false</code>; it cannot enforce staging. Sound effects are manually timed cues and add no physical interactions.</p>
+<p>Vehicle boarding pairs live in <code>core/props/vehicle-actions.ts</code> and join the shared animation registry. <code>anim/boarding.ts</code> caches body-specific choreography, uses fixed-length arm/leg IK, and normalizes anatomical height and foot grounding so the game and full skeletons retain the same leg motion. Its endpoints are the existing idle and riding poses, including the fitted deck height. Both preview and human exports use this evaluator.</p>
+<p>Vehicle geometry is fitted against the canonical riding clip, never against entry/exit contact samples. <code>vehicle-doors.ts</code> partitions the actual bodywork, glazing and trim into hinged rigid components; prop GLB/FBX files collect all selected animations for each model/occupant role. Studio reuses that same vehicle instance across boarding, riding and exit. <code>studio/vehicle-stage.ts</code> derives the full vehicle inventory, world paths, shared seat transforms and on-foot joins from the timeline. Props scheduled for later entries are already waiting, abandoned props persist, and linked occupants follow one operator-fitted vehicle. <code>vehicle-seats.ts</code> validates identity, capacity, occupied intervals and stationary boarding; <code>vehicle-performance.ts</code> fits passenger choreography without scaling limbs. Scrubbing, reload and offline rendering agree without a mutable interaction state. The focused <code>test:boarding</code> and Studio <code>--boarding</code> suites cover endpoints, fixed limb lengths, all rigs/binds, parking, five actors, recovery and movie export.</p>
+<p>Mounted weapons are an optional sample layer (<code>anim/riding-weapons.ts</code>), selected by <code>Rig.weapon</code> and per-frame/beat <code>weaponPose</code>/<code>weaponYaw</code>. It keeps the rider’s hips/legs and left-hand contacts, and stores the unarmed controls alongside the frame so props cannot follow the aiming wrist. Paddlers sample a resting stroke while armed. Hidden weapons scale only the leaf WeaponR socket; preview and GLB/FBX bake the same channel and reset it between actions. Vehicle fitting always samples the unarmed pose. Car side glazing is a separate rigid component that lowers for armed riding.</p>
+<p>Outdoor extensions add paths, waterfronts and distant set dressing across 360 m in X/Z before material compaction. Furniture keeps its original scale. Camera far clipping and outdoor fog cover the enlarged sites; placement accepts ±200 m. Studio defaults multiply the previous vehicle speeds by three while retaining explicit per-beat speeds.</p>
+
+    <div class="foot"><a href="https://github.com/olatunde85/3d-gen/blob/main/docs/architecture.md">Edit this page on GitHub</a><a href="https://github.com/olatunde85/3d-gen/discussions">Ask a question</a></div>
+  </article>
+</div>
+<script>(() => {
+  const box = document.getElementById('docs-search'), list = document.getElementById('docs-results');
+  let index, results = [], active = 0;
+  const load = () => index ??= fetch('/TRIKAAL-Character-Studio/docs/search.json').then((r) => r.json()).then((all) => all.map((e) => ({ ...e, lh: e.h.toLowerCase(), lp: e.p.toLowerCase(), lt: e.t.toLowerCase() })));
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const mark = (s, words) => esc(s).replace(new RegExp('(' + words.map((w) => esc(w).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'gi'), '<mark>$1</mark>');
+  function excerpt(e, words) {
+    const at = Math.max(0, Math.min(...words.map((w) => { const i = e.lt.indexOf(w); return i < 0 ? Infinity : i; })));
+    if (!isFinite(at)) return e.t.slice(0, 120);
+    const from = Math.max(0, e.t.lastIndexOf(' ', at - 40) + 1);
+    return (from ? '… ' : '') + e.t.slice(from, from + 140) + (from + 140 < e.t.length ? ' …' : '');
+  }
+  function score(e, words, phrase) {
+    let s = e.lh.includes(phrase) ? 20 : 0;
+    for (const w of words) {
+      const h = e.lh.includes(w), p = e.lp.includes(w), t = e.lt.includes(w);
+      if (!h && !p && !t) return 0;
+      s += (h ? 8 : 0) + (p ? 3 : 0) + (t ? 1 + Math.min(1, (e.lt.split(w).length - 2) * 0.25) : 0);
+    }
+    return s;
+  }
+  function show() {
+    list.hidden = !box.value.trim();box.setAttribute('aria-expanded', String(!list.hidden));
+    list.innerHTML = results.length ? results.map((r, i) => '<a role="option" href="' + r.e.u + '" aria-selected="' + (i === active) + '"><b>' + mark(r.e.h, r.words) + '</b>' + (r.e.h !== r.e.p ? '<small>' + esc(r.e.p) + '</small>' : '') + '<span>' + mark(r.x, r.words) + '</span></a>').join('')
+      : '<p>No results for “' + esc(box.value.trim()) + '”.</p>';
+  }
+  async function search() {
+    const query = box.value.trim().toLowerCase(), words = query.split(/\s+/).filter(Boolean);
+    if (!words.length) { results = [];show();return; }
+    const all = await load();
+    if (box.value.trim().toLowerCase() !== query) return;
+    results = all.map((e) => ({ e, s: score(e, words, query), words })).filter((r) => r.s).sort((a, b) => b.s - a.s).slice(0, 8).map((r) => ({ ...r, x: excerpt(r.e, words) }));
+    active = 0;show();
+  }
+  box.addEventListener('input', search);
+  box.addEventListener('focus', () => { load();if (box.value.trim()) search(); });
+  box.addEventListener('keydown', (ev) => {
+    if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') { ev.preventDefault();if (results.length) { active = (active + (ev.key === 'ArrowDown' ? 1 : results.length - 1)) % results.length;show();list.children[active]?.scrollIntoView({ block: 'nearest' }); } }
+    else if (ev.key === 'Enter' && results[active]) { ev.preventDefault();location.href = results[active].e.u;list.hidden = true; }
+    else if (ev.key === 'Escape') { box.value = '';results = [];show();box.blur(); }
+  });
+  // Clicking a result works before the box loses focus; clicking elsewhere closes the list.
+  list.addEventListener('mousedown', (ev) => ev.preventDefault());
+  list.addEventListener('click', () => { list.hidden = true;box.blur(); });
+  box.addEventListener('blur', () => { list.hidden = true;box.setAttribute('aria-expanded', 'false'); });
+  document.addEventListener('keydown', (ev) => {
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName ?? '') || document.activeElement?.isContentEditable;
+    if (ev.key === '/' && !typing && !ev.metaKey && !ev.ctrlKey) { ev.preventDefault();box.focus(); }
+  });
+})();</script>
+</body>
+</html>

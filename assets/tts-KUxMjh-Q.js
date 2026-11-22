@@ -1,0 +1,1 @@
+export{t as MODEL_BASE,n as MODEL_REVISION,r as cancelSpeechGeneration,i as generateSpeech,a as releaseSpeechEngine,o as speakLocally,s as speechIsCurrent,c as speechModel}from"./tts-CIMxZgkS.js";

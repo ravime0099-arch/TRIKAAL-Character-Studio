@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ara Play: Ara 3D Gen docs</title>
+<meta name="description" content="Ara Play turns character recipes and a few mission choices into a playable game. Open /play/ with npm run dev, or serve the production build. Game setup or" />
+<link rel="canonical" href="https://ara3dgen.com/docs/play/" />
+<link rel="icon" href="/TRIKAAL-Character-Studio/favicon.ico" sizes="48x48" />
+<link rel="icon" href="/TRIKAAL-Character-Studio/favicon.svg" type="image/svg+xml" />
+<meta property="og:title" content="Ara Play: Ara 3D Gen docs" />
+<meta property="og:description" content="Ara Play turns character recipes and a few mission choices into a playable game. Open /play/ with npm run dev, or serve the production build. Game setup or" />
+<meta property="og:image" content="https://ara3dgen.com/og.jpg" />
+<meta name="theme-color" content="#0f1116" />
+<style>
+:root { --bg:#0f1116; --panel:#171c26; --line:#262d3b; --text:#e9edf4; --muted:#9aa4b5; --accent:#5b8cff; --accent-2:#9db9ff; color-scheme: dark;
+  font: 17px/1.65 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; background: radial-gradient(1100px 600px at 75% -10%, rgba(91,140,255,.14), transparent 60%), var(--bg); color: var(--text); }
+a { color: var(--accent-2); }
+.nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 24px; padding: 14px clamp(16px,4vw,48px);
+  background: rgba(15,17,22,.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(38,45,59,.6); }
+.brand { display: inline-flex; align-items: center; gap: 0.28em; color: var(--text); text-decoration: none; font-weight: 650; font-size: 19px; letter-spacing: -0.02em; white-space: nowrap; }
+.brand img { margin-right: 6px; }
+.brand span { color: var(--muted); }
+.nav nav { display: flex; gap: 20px; margin-left: auto; }
+.nav nav a { color: var(--muted); text-decoration: none; font-size: 15px; }
+.nav nav a:hover, .nav nav a.on { color: var(--text); }
+.btn { display: inline-block; padding: 9px 14px; border-radius: 10px; background: var(--accent); color: #fff; font: 600 14px/1 system-ui, sans-serif; text-decoration: none; white-space: nowrap; }
+.wrap { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 48px; max-width: 1180px; margin: 0 auto; padding: 40px clamp(16px,4vw,48px) 80px; }
+.side { position: sticky; top: 84px; align-self: start; font-size: 15px; }
+.side a { display: block; padding: 7px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; }
+.side a:hover { color: var(--text); background: rgba(255,255,255,.04); }
+.side a.on { color: var(--text); background: rgba(91,140,255,.14); }
+.side .sub a { padding: 4px 12px 4px 24px; font-size: 14px; }
+article { min-width: 0; max-width: 820px; }
+article h1 { font-size: clamp(32px, 4.5vw, 46px); letter-spacing: -.02em; line-height: 1.1; margin: 0 0 20px; }
+article h2 { font-size: 28px; letter-spacing: -.01em; margin: 48px 0 14px; padding-top: 8px; border-top: 1px solid var(--line); line-height: 1.2; }
+article h3 { font-size: 20px; margin: 32px 0 10px; }
+h1, h2, h3 { position: relative; scroll-margin-top: 90px; }
+.anchor { position: absolute; left: -24px; color: var(--muted); text-decoration: none; opacity: 0; }
+h2:hover .anchor, h3:hover .anchor { opacity: 1; }
+p, ul, ol { margin: 0 0 16px; }
+li { margin: 4px 0; }
+code { font: 14.5px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; background: rgba(255,255,255,.06); padding: 2px 6px; border-radius: 6px; }
+pre { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; overflow-x: auto; margin: 0 0 20px; }
+pre code { background: none; padding: 0; font-size: 14px; }
+table { width: 100%; border-collapse: collapse; margin: 0 0 22px; font-size: 15px; display: block; overflow-x: auto; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-weight: 600; }
+.foot { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; display: flex; gap: 16px; flex-wrap: wrap; }
+.search { position: relative; margin: 0 0 14px; }
+.search input { width: 100%; padding: 9px 12px 9px 34px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--text); font: 15px system-ui, sans-serif; }
+.search input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.search svg { position: absolute; left: 11px; top: 11px; width: 15px; height: 15px; color: var(--muted); pointer-events: none; }
+.search kbd { position: absolute; right: 9px; top: 8px; padding: 1px 7px; border: 1px solid var(--line); border-radius: 6px; color: var(--muted); font: 12px/1.5 ui-monospace, Menlo, monospace; pointer-events: none; }
+.search input:focus ~ kbd, .search input:not(:placeholder-shown) ~ kbd { display: none; }
+.results { position: absolute; z-index: 20; top: calc(100% + 6px); left: 0; width: min(420px, calc(100vw - 32px)); max-height: min(70vh, 520px); overflow-y: auto;
+  padding: 6px; border: 1px solid var(--line); border-radius: 12px; background: #141924; box-shadow: 0 18px 48px rgba(0,0,0,.45); }
+.results[hidden] { display: none; }
+.side .results a { display: block; padding: 9px 10px; border-radius: 8px; color: var(--text); background: none; }
+.side .results a[aria-selected="true"], .side .results a:hover { background: rgba(91,140,255,.16); }
+.results b { display: block; font-weight: 600; font-size: 15px; }
+.results small { display: block; color: var(--muted); font-size: 12px; margin-top: 1px; }
+.results span { display: block; color: var(--muted); font-size: 13.5px; line-height: 1.45; margin-top: 3px; overflow-wrap: anywhere; }
+.results mark { background: rgba(91,140,255,.3); color: var(--text); border-radius: 3px; padding: 0 1px; }
+.results p { margin: 0; padding: 10px; color: var(--muted); font-size: 14px; }
+@media (max-width: 860px) {
+  .search { width: 100%; }
+  .wrap { grid-template-columns: 1fr; gap: 20px; padding-top: 24px; }
+  .side { position: static; display: flex; flex-wrap: wrap; gap: 4px; }
+  .side .sub { display: none; }
+  .side a { padding: 6px 10px; background: rgba(255,255,255,.04); }
+  .nav nav { display: none; }
+  .anchor { display: none; }
+}</style>
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="/TRIKAAL-Character-Studio/"><img src="/TRIKAAL-Character-Studio/logo.svg" alt="" width="24" height="24" />Ara <span>3D Gen</span></a>
+  <nav><a href="/TRIKAAL-Character-Studio/#features">Features</a><a href="/TRIKAAL-Character-Studio/docs/" class="on">Docs</a><a href="https://github.com/olatunde85/3d-gen">GitHub</a></nav>
+  <a class="btn" href="/TRIKAAL-Character-Studio/app/">Open Builder</a>
+</header>
+<div class="wrap">
+  <aside class="side" aria-label="Documentation pages">
+    <div class="search" role="search">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6"/><path d="m13 13 5 5"/></svg>
+      <input id="docs-search" type="search" placeholder="Search the docs" autocomplete="off" spellcheck="false" aria-label="Search the docs" aria-controls="docs-results" aria-expanded="false" />
+      <kbd>/</kbd>
+      <div class="results" id="docs-results" role="listbox" hidden></div>
+    </div>
+    <a href="/TRIKAAL-Character-Studio/docs/">Overview</a><a href="/TRIKAAL-Character-Studio/docs/self-hosting/">Self-hosting</a><a href="/TRIKAAL-Character-Studio/docs/engines/">Using characters in your engine</a><a href="/TRIKAAL-Character-Studio/docs/characters/">Bodies, clothing and looks</a><a href="/TRIKAAL-Character-Studio/docs/faces/">Faces, expressions and lip-sync</a><a href="/TRIKAAL-Character-Studio/docs/animations/">Animations</a><a href="/TRIKAAL-Character-Studio/docs/rigging/">Rigging</a><a href="/TRIKAAL-Character-Studio/docs/exporting/">Exporting</a><a href="/TRIKAAL-Character-Studio/docs/studio/">Ara Studio</a><a href="/TRIKAAL-Character-Studio/docs/architecture/">Architecture</a><a href="/TRIKAAL-Character-Studio/docs/cli/">Command line (ara3d)</a><a href="/TRIKAAL-Character-Studio/docs/embed/">Embed a character (&lt;ara-character&gt;)</a><a href="/TRIKAAL-Character-Studio/docs/hosting-games/">Hosting your game</a><a href="/TRIKAAL-Character-Studio/docs/keys/">Your own AI and voices</a><a href="/TRIKAAL-Character-Studio/docs/library/">JavaScript library (ara3d)</a><a href="/TRIKAAL-Character-Studio/docs/mcp/">AI assistants (MCP)</a><a href="/TRIKAAL-Character-Studio/docs/play/" class="on" aria-current="page">Ara Play</a><div class="sub"><a href="#game-modes">Game modes</a><a href="#mission-and-locations">Mission and locations</a><a href="#cast-and-combat">Cast and combat</a><a href="#vehicles-and-air-support">Vehicles and air support</a><a href="#lighting-weather-and-sound">Lighting, weather and sound</a><a href="#story-text-and-voice">Story, text and voice</a><a href="#checkpoints-campaigns-and-replay">Checkpoints, campaigns and replay</a><a href="#controls">Controls</a><a href="#save-import-and-export">Save, import and export</a><a href="#verification-and-code">Verification and code</a></div><a href="/TRIKAAL-Character-Studio/docs/play-expansion/">Ara Play expansion</a><a href="/TRIKAAL-Character-Studio/docs/publishing/">Publishing service</a><a href="/TRIKAAL-Character-Studio/docs/studio-location-maps/">Location staging maps</a>
+  </aside>
+  <article>
+<h1 id="ara-play"><a class="anchor" href="#ara-play" aria-hidden="true">#</a>Ara Play</h1>
+<p>Ara Play turns character recipes and a few mission choices into a playable game. Open <code>/play/</code> with <code>npm run dev</code>, or serve the production build. <strong>Game setup</strong> organizes creation into Mission, Cast, Challenge and Atmosphere. The mission sequence and Add mission action stay visible above every section; a persistent label names the mission and section being edited. Hero and life-budget controls are explicitly shared across the game. <strong>LLM Assist</strong> produces a complete capability guide for an external assistant and accepts its JSON for validation and preview.</p>
+<p>Five measured locations, objective chains, enemy roles, ground and helicopter extraction, combat, story cues and independent game ZIPs use the same simulation in preview and export. The creator chooses the story beats; Ara stages characters, routes, terminals, supplies and vehicles automatically.</p>
+<h2 id="game-modes"><a class="anchor" href="#game-modes" aria-hidden="true">#</a>Game modes</h2>
+<p><strong>Game setup → Mission → What kind of game?</strong> chooses the rules: <strong>Mission</strong> (the staged maps described below), <strong>Arcade race</strong> or <strong>Endless runner</strong>. Race and runner games keep the same four sections: <strong>Mission</strong> picks the circuit or course and the format (laps, or the runner&#39;s goal); <strong>Cast</strong> picks your car and the field of rivals, or the chaser, beside the usual character tabs; <strong>Challenge</strong> sets handling, boosts and pickups, or pace, obstacles and power-ups; <strong>Atmosphere</strong> keeps the music. Mission-only controls are set aside while an arcade mode is chosen. Every mode uses the same hero, cast, music, chapters, saved setups and independent game ZIP. Enemy characters drive the rival cars or play the runner&#39;s chaser. In JSON, <code>&quot;mode&quot;: &quot;race&quot;</code> or <code>&quot;mode&quot;: &quot;runner&quot;</code> sits at the top level with a matching <code>race</code> or <code>runner</code> object. Each chapter plays its own mode, chosen under <strong>What kind of game?</strong> while that chapter is selected, so one campaign can run a mission, then a street race, then a rooftop escape. A chapter without a <code>mode</code> plays the first chapter&#39;s mode and, within that mode, inherits its race or runner settings unless it sets its own. In race and runner games the sequence above the sections lists cup races or run stages, or campaign chapters when modes are mixed, and <strong>Make it yours</strong> sets the title and briefing. Each race or stage opens on a briefing card with its briefing, if one is set, and the cup or stage list with finished chapters ticked; <strong>Next race</strong> or <strong>Next stage</strong> opens that briefing. Until the creator names it, an arcade game or chapter takes the name of its circuit or course; a chapter added in an arcade mode takes the next unused circuit or course.</p>
+<h3 id="arcade-race"><a class="anchor" href="#arcade-race" aria-hidden="true">#</a>Arcade race</h3>
+<p>Choose one of eleven circuits, or supply a custom circuit as 6–64 <code>[x, z]</code> control points in metres with a width of 10–24 m and any circuit theme. Custom loops are 400–6000 m long, cannot cross or touch themselves, and need corners no tighter than the road allows. Built-in circuits add ramps, and City Loop and Neon District have shortcuts.</p>
+<table>
+<thead>
+<tr>
+<th>Circuit</th>
+<th>Theme</th>
+<th>Ground</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>City Loop, Desert Run, Harbour Sprint, Forest Ring</td>
+<td>City, desert, harbour, forest</td>
+<td>Level road with hills, mesas or skyline in the distance</td>
+</tr>
+<tr>
+<td>Glacier Loop</td>
+<td>Snow and ice</td>
+<td>Snowy pines and peaks; the road rolls with the hills; soft snow verges, ice patches and icy traction; rain falls as snow</td>
+</tr>
+<tr>
+<td>Palm Coast</td>
+<td>Tropical coast</td>
+<td>Palms, beach huts and the sea beside the road; sand verges slow cars that run wide</td>
+</tr>
+<tr>
+<td>Neon District</td>
+<td>Neon night city</td>
+<td>Towers with lit windows, neon signs spilling colour on a wet road, lit barrier strips; always at night</td>
+</tr>
+<tr>
+<td>Jungle Falls</td>
+<td>Jungle</td>
+<td>A dirt road through rainforest past waterfalls; mud verges and mud patches; fireflies at night</td>
+</tr>
+<tr>
+<td>Lagoon Bridges</td>
+<td>Lagoon city</td>
+<td>City islands joined by bridges over a lagoon, with parked minibuses and tricycles and roadside stalls</td>
+</tr>
+<tr>
+<td>Mountain Pass</td>
+<td>Mountain pass</td>
+<td>Switchbacks that climb and fall up to 11% past cliffs and cuttings behind guard rails</td>
+</tr>
+<tr>
+<td>Kart Arena</td>
+<td>Kart arena</td>
+<td>A short, tight circuit inside tyre walls and grandstands full of spectators</td>
+</tr>
+</tbody></table>
+<p>Climbs slow cars and descents speed them up; cars tilt with the road and the camera follows them up and down. Soft verges beside the road are drivable but slow, mud patches drag and ice patches take away grip for a moment. Each circuit stands on its own land, which meets the road and rises or falls away from it, under a sky with a distant horizon of peaks, palms, canopy, skyline or mesas.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>laps</code></td>
+<td>1–9 laps; laps are split into three sectors with live deltas against your best lap</td>
+</tr>
+<tr>
+<td><code>opponents</code></td>
+<td>3–7 AI racers following a racing line that brakes for each corner; repeated characters race under numbered names</td>
+</tr>
+<tr>
+<td><code>aiSkill</code></td>
+<td>Easy, medium, hard or expert pace and cornering. Expert rivals run past their car&#39;s listed top speed, brake late, take corners faster, fire nitro early and barely ease off when they lead</td>
+</tr>
+<tr>
+<td><code>rubberBand</code></td>
+<td>Cars behind the player speed up slightly and cars ahead ease off, so races stay close</td>
+</tr>
+<tr>
+<td><code>handling</code></td>
+<td><strong>Drift</strong>: hold Drift while steering at speed to slide and charge a boost released on exit; <strong>Grip</strong>: Drift brakes</td>
+</tr>
+<tr>
+<td><code>nitro</code></td>
+<td>A meter that refills slowly and from drift boosts; hold Nitro on straights</td>
+</tr>
+<tr>
+<td><code>pickups</code></td>
+<td>Boost pads; item boxes giving a boost, an oil slick to drop behind or a nitro refill; oil-slick hazards</td>
+</tr>
+<tr>
+<td><code>ghost</code></td>
+<td>Records the best lap and replays it as a translucent car</td>
+</tr>
+<tr>
+<td><code>traction</code></td>
+<td><code>icy</code> makes every car slide wide; <code>normal</code> keeps full grip. Without it, snow circuits are icy and the others normal</td>
+</tr>
+<tr>
+<td><code>car</code></td>
+<td>Sports car, muscle car, saloon, go-kart, SUV, pickup, danfo, van, box truck, motorcycle, scooter, quad bike, keke or city bus, each with its own top speed, acceleration and grip, plus a paint colour</td>
+</tr>
+<tr>
+<td><code>rivals</code></td>
+<td>The vehicles the AI racers drive, in turn, such as <code>[&quot;keke&quot;,&quot;bus&quot;]</code>; without it the field is mixed. <strong>Rival vehicles</strong> in Cast sets one vehicle for every rival</td>
+</tr>
+</tbody></table>
+<p>A countdown starts each race; throttle pressed just before GO gives a launch boost. Walls bounce cars back instead of wrecking them, and a car that is stuck or driving the wrong way returns to the road. <strong>F</strong> returns the player to the road at any time. The HUD shows position, laps, lap and best times, the ghost delta, speed, nitro, drift charge, the held item and a minimap. The results show a podium, the finishing order with car colours and gaps to the winner, the race and best-lap times with any new records, and in a cup the cash earned and the points table.</p>
+<p>Best laps, best race times and the best-lap ghost are kept per circuit in the browser. <strong>Copy ghost link</strong> shares the ghost: anyone opening the game with that link races against it on the same circuit. Each game has a <strong>daily challenge</strong> on a circuit chosen by the date. With chapters, the races form a <strong>cup</strong>: points go 10-8-6-5-4-3-2-1, places pay cash, and the <strong>Garage</strong> spends that cash on other cars and paint, comparing each car&#39;s top speed, acceleration, grip and turning.</p>
+<h3 id="endless-runner"><a class="anchor" href="#endless-runner" aria-hidden="true">#</a>Endless runner</h3>
+<p>The course is generated from straights, corners and T-junctions in the chosen theme and gets harder with distance: shorter straights, tighter spacing and more combined obstacles. Every obstacle leaves a way through.</p>
+<table>
+<thead>
+<tr>
+<th>Obstacle</th>
+<th>Way through</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Low barrier</td>
+<td>Jump</td>
+</tr>
+<tr>
+<td>Overhead bar</td>
+<td>Slide</td>
+</tr>
+<tr>
+<td>Gap</td>
+<td>Jump</td>
+</tr>
+<tr>
+<td>Lane blocker</td>
+<td>Change lane</td>
+</tr>
+<tr>
+<td>Moving cart</td>
+<td>Change lane</td>
+</tr>
+<tr>
+<td>Armed enemy</td>
+<td>Shoot it down your lane (F, Enter or the Shoot button), or change lane</td>
+</tr>
+</tbody></table>
+<p>Armed enemies rise into view about 32 m ahead in one lane and walk slowly toward the runner, gun at the ready, raising it within 18 m. <strong>Cast → Armed enemies</strong> chooses which enemy appears (<code>runner.gunman</code>; automatic picks an armed enemy other than the chaser, and an unarmed one is given a pistol) and the runner&#39;s gun (<code>runner.weapon</code>; automatic uses the chapter&#39;s loadout gun, else a pistol). The runner carries that gun throughout the run and raises it to aim down the lane with each shot, legs still running. A shot travels down the runner&#39;s own lane and drops the nearest enemy within 38 m for 150 points and two coins. An enemy still standing in the runner&#39;s lane at 14 m fires once: a shield, hoverboard or boost takes the hit, otherwise the runner stumbles. Running into one ends the run.</p>
+<p>Clipping a low barrier or a bar is a <strong>stumble</strong>: the runner slows and the chaser closes in, and a second stumble soon after is caught. Hitting a blocker or cart, falling into a gap, or missing a corner ends the run unless a shield or boost is active. <strong>Revive</strong> continues the run for coins, doubling the price each time.</p>
+<p>Coins sit in lines and arcs over jumps. Power-ups are the coin magnet, shield, speed boost, ×2 score, spring boots, hoverboard and coin rush, each shown on the course as a small model of itself over a ring in its colour. Spring boots jump high enough to clear overhead bars and to land on tall blocks and train roofs: the runner runs along a roof until it ends and drops back down, and pressing slide in the air brings them straight down to pick a landing. Anything that cannot be stood on bounces a spring-booted runner back up. On a hoverboard (a self-balancing board with a wheel at each end) the runner stands tall and rolls about a third faster than running, over low barriers and gaps; a crash breaks the board instead of ending the run, and a board never runs out over a gap. Coin rush turns every obstacle on the stretch ahead into coins and closes the gaps for a few seconds, pulling the coins in from every lane. In the train yard half the trains stand still, one to three carriages long, with coins along their roofs. Score is distance plus coins, times the multiplier. Three missions at a time (for example collect coins, run a distance or jump a number of times) raise the multiplier when all three are done. Coins are banked once per run, and the run&#39;s result shows distance, coins, multiplier, best score and mission progress. The <strong>Shop</strong> spends banked coins on five levels of each power-up and on extra runners: the enemies. A <code>goal</code> of distance, coins or score completes a stage; with chapters, each stage opens the next. <code>seed</code> gives every player the same course, and the <strong>daily run</strong> uses a course chosen by the date.</p>
+<p>Each theme draws its own obstacles, props, floor, sky and what lies below the gaps:</p>
+<table>
+<thead>
+<tr>
+<th>Theme</th>
+<th>Jump</th>
+<th>Slide under</th>
+<th>Lane blockers</th>
+<th>Moving carts</th>
+<th>Below the gaps and around</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Temple ruins</td>
+<td>Fallen slabs</td>
+<td>Stone lintels</td>
+<td>Broken walls</td>
+<td>Mine carts</td>
+<td>Jungle far below; pillars and ferns</td>
+</tr>
+<tr>
+<td>City rooftops</td>
+<td>Barriers</td>
+<td>Pipes</td>
+<td>Rooftop blocks</td>
+<td>Carts</td>
+<td>The street far below; skyline</td>
+</tr>
+<tr>
+<td>Desert canyon</td>
+<td>Rock ledges</td>
+<td>Timber beams</td>
+<td>Rock blocks</td>
+<td>Carts</td>
+<td>Canyon floor between rock walls</td>
+</tr>
+<tr>
+<td>Market street</td>
+<td>Produce crates</td>
+<td>Striped awnings</td>
+<td>Parked tricycles</td>
+<td>Yellow minibuses</td>
+<td>Trenches in the road; stalls under umbrellas on raised pavements</td>
+</tr>
+<tr>
+<td>Snowy peaks</td>
+<td>Snowdrifts</td>
+<td>Icicle beams</td>
+<td>Ice blocks</td>
+<td>Giant snowballs</td>
+<td>Snowfields; ice-cave arches and falling snow</td>
+</tr>
+<tr>
+<td>Beach boardwalk</td>
+<td>Cool boxes</td>
+<td>Volleyball nets</td>
+<td>Surfboard racks</td>
+<td>Ice-cream carts</td>
+<td>The sea under the planks; palms, umbrellas and beach huts</td>
+</tr>
+<tr>
+<td>Neon city</td>
+<td>Lit kerbs</td>
+<td>Neon beams</td>
+<td>Sign blocks</td>
+<td>Night cars</td>
+<td>The lit city far below; always at night</td>
+</tr>
+<tr>
+<td>Jungle ruins</td>
+<td>Mossy logs</td>
+<td>Hanging vines</td>
+<td>Stone idols</td>
+<td>Rolling boulders</td>
+<td>A river under broken bridges; stone gateways</td>
+</tr>
+<tr>
+<td>Train yard</td>
+<td>Buffer stops</td>
+<td>Signal barriers</td>
+<td>Parked wagons</td>
+<td>Carriages, 6.5 m long</td>
+<td>Rails in every lane, platforms, gantries and tunnels</td>
+</tr>
+<tr>
+<td>Volcano</td>
+<td>Magma vents</td>
+<td>Charred beams</td>
+<td>Basalt columns</td>
+<td>Fire boulders</td>
+<td>Lava; drifting embers</td>
+</tr>
+<tr>
+<td>Haunted forest</td>
+<td>Grave rows</td>
+<td>Low branches</td>
+<td>Broken fences</td>
+<td>A runaway hearse</td>
+<td>Fog, dead trees and fireflies; always at night</td>
+</tr>
+</tbody></table>
+<h4 id="medals"><a class="anchor" href="#medals" aria-hidden="true">#</a>Medals</h4>
+<p>Every race and run stage awards bronze, silver or gold, and the best medal for each stage is kept with the game&#39;s local records. The briefing card shows the three medals with the best one won lit, and the result card names the medal earned and marks a new best. Races award gold, silver and bronze for first, second and third; <strong>Challenge → Medals → Podium medals</strong> turns them off (<code>&quot;race&quot;: {&quot;medals&quot;: false}</code>). Runs award medals for score targets in one run, 1,500, 4,000 and 8,000 points unless the creator sets their own under <strong>Challenge → Medals</strong> (<code>&quot;runner&quot;: {&quot;medals&quot;: {&quot;bronze&quot;: 1500, &quot;silver&quot;: 4000, &quot;gold&quot;: 8000}}</code>, each above the one before). On a stage with a goal, the goal must be reached first. <code>&quot;medals&quot;: false</code> turns runner medals off. Daily runs and challenges award no medals.</p>
+<h4 id="objects-to-find"><a class="anchor" href="#objects-to-find" aria-hidden="true">#</a>Objects to find</h4>
+<p><strong>Mission → Objects to find</strong> lists up to eight objects placed along the course, stored as <code>runner.objects</code>. Each object has:</p>
+<ul>
+<li>a <strong>type</strong>, which sets its 3D model and default name: dossier, sealed letter, old map, journal, magnifier, brass key, compass, ancient dagger, figurine, tribal mask, amulet, gemstone, crown, treasure box or hourglass</li>
+<li>a <strong>name</strong> of up to 40 characters, such as &quot;The Minister&#39;s dossier&quot;</li>
+<li>an <strong>icon</strong> for the HUD and cards: any object type, or a clue symbol (star, question mark, eye, fingerprint, footprints, lock, skull, flag, puzzle piece, feather, moon or map pin)</li>
+<li>a <strong>count</strong> of 1 to 10 pieces to collect</li>
+<li>an optional <strong>clue</strong> of up to 160 characters, shown when the object is found</li>
+</ul>
+<p>Objects appear one at a time and in list order, so clues can tell a story. Each floats in a soft beam of light in a lane clear of obstacles, gaps and carts, at least 70 m ahead, and never on a junction branch. A missed object turns up again about 40 m further on. During the run, a chip for each object sits under the score, counting pieces and lighting up once the object is complete. Finding one shows its name and clue.</p>
+<p>The <strong>Find objects</strong> goal (<code>&quot;goal&quot;: {&quot;type&quot;: &quot;objects&quot;}</code>) completes the run once every piece has been found in one run, and needs at least one object. With any other goal the objects are bonus finds worth 250 points each. The briefing card lists the objects to find, and the result card shows what was found with each clue. Objects use their own random sequence, so adding them never changes a seeded course.</p>
+<h3 id="character-moments"><a class="anchor" href="#character-moments" aria-hidden="true">#</a>Character moments</h3>
+<p><strong>Cast → Player → Character moments</strong> applies to every chapter and is stored as the top-level <code>poses</code> (<code>{&quot;lookAround&quot;: true, &quot;dance&quot;: true}</code>, both on by default). With <strong>Look around before the start</strong>, the hero plays the look-around animation while a mission or runner briefing is open. With <strong>Dance on a win</strong>, the hero dances (the groove dance) on a completed mission, and a reached runner goal ends the run: the runner stops, the camera swings round to face them while they dance, and the results follow. Without the dance, missions end with a cheer, and a single runner stage carries on past its goal for a high score while a stage in a series ends there. Race drivers stay in their cars.</p>
+<h3 id="time-and-weather"><a class="anchor" href="#time-and-weather" aria-hidden="true">#</a>Time and weather</h3>
+<p><strong>Atmosphere → Light, weather &amp; sound</strong> sets the time of day and weather for races and runs, stored as <code>mission.environment.time</code> and <code>weather</code>; each chapter can choose its own. Dawn and dusk tint the sky and lower the sun. Dusk and night switch on every car&#39;s headlamps with light pools on the road ahead, lamp posts with pools along the circuit, and lamps and a lantern pool around the runner. Night runs keep a bright moonlit fill, a longer view and faintly lit obstacles so the course stays readable. Rain darkens and wets the road so it reflects, with falling streaks and the Heavy rain recording; fog closes in the view; a sandstorm adds an orange haze, blowing dust and the Sandstorm recording. Both recordings loop with a crossfaded seam, and filtered noise stands in until they load. Weather sound falls silent while the game is paused or the page is in the background. Thicker fog also shortens the draw distance. The lamps and pools are batched additive decals rather than real lights, so night and weather add a handful of draw calls and no extra lighting cost. Race and runner games have no companion; companion settings stay in the JSON but are unused.</p>
+<h3 id="controls-and-feel"><a class="anchor" href="#controls-and-feel" aria-hidden="true">#</a>Controls and feel</h3>
+<table>
+<thead>
+<tr>
+<th>Race</th>
+<th>Runner</th>
+<th>Keyboard</th>
+<th>Gamepad</th>
+<th>Touch</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Accelerate / brake</td>
+<td>—</td>
+<td>W / S or ↑ / ↓</td>
+<td>Right / left trigger</td>
+<td>The car accelerates by itself; Brake button</td>
+</tr>
+<tr>
+<td>Steer</td>
+<td>Change lane, turn at corners</td>
+<td>A / D or ← / →</td>
+<td>Left stick or d-pad</td>
+<td>Drag the thumb (race) or swipe (runner)</td>
+</tr>
+<tr>
+<td>Drift</td>
+<td>Jump</td>
+<td>Space (runner: also W / ↑)</td>
+<td>A</td>
+<td>Drift button / swipe up</td>
+</tr>
+<tr>
+<td>Nitro</td>
+<td>Slide</td>
+<td>Shift (runner: S / ↓)</td>
+<td>RB or X (runner: B)</td>
+<td>Nitro button / swipe down</td>
+</tr>
+<tr>
+<td>Item / back to road</td>
+<td>—</td>
+<td>E / F</td>
+<td>B / Y</td>
+<td>Item button</td>
+</tr>
+<tr>
+<td>Restart</td>
+<td>Restart</td>
+<td>R</td>
+<td>Back</td>
+<td>Restart on the pause card</td>
+</tr>
+<tr>
+<td>Pause</td>
+<td>Pause</td>
+<td>Escape or P</td>
+<td>Start</td>
+<td>Pause button</td>
+</tr>
+</tbody></table>
+<p>A race or run applied from Game setup or LLM Assist opens on its briefing card; it starts when the player presses Start.</p>
+<p>Tilt steering can be switched on from the pause card on phones. The lens widens with speed, impacts shake the camera, speed lines and a soft edge blur grow with pace, boosts flash the screen and near misses briefly slow time; reduced-motion settings soften these effects. Engine pitch follows the car&#39;s speed, other sound effects are synthesised in the browser, and the music gains tempo and volume as a race goes on or a run speeds up. <strong>R</strong> restarts immediately without reloading the scene. Opening Game setup pauses the game.</p>
+<p>Both modes run fixed-step rules, draw repeated objects in batches and reuse course pieces, coins and obstacles instead of creating new ones. Runner pieces are generated ahead of the player and dropped behind, and the world moves back toward the origin on long runs. Distant drivers are hidden. Leaderboards are local to each browser.</p>
+<h2 id="mission-and-locations"><a class="anchor" href="#mission-and-locations" aria-hidden="true">#</a>Mission and locations</h2>
+<p>Choose Freight depot, Military base, Desert compound, Market street or Urban block. Each has its own solid geometry, measured starts, patrol lanes, roof positions and extraction anchors. Walls and props block movement, sight, bullets and grenade blasts. Twelve arrangements combine three staging patterns with four cover packs. Open, Balanced and Cover-rich layouts remain available.</p>
+<p>Three ready-made goals remain available:</p>
+<ul>
+<li><strong>Escape:</strong> collect the key and unlock the gate, or collect vehicle keys and drive out.</li>
+<li><strong>Rescue:</strong> free the companion and reach extraction together. With pickup extraction, the rescue unlocks the truck; there is no additional key hunt.</li>
+<li><strong>Clear:</strong> defeat every enemy, then extract. Use starting or findable firearms.</li>
+</ul>
+<p>An optional briefcase or package is a required additional objective. It waits near the gate, a little further in at night, clear of the floodlight posts. Interact from any reachable side; Ara faces the item and cancels blocked approaches instead of trapping the character. Secured cargo becomes mission inventory.</p>
+<p>Choose On foot, Pickup or Helicopter extraction. Pickup challenges provide Easy (inside the compound), Standard (approximately 150 m) or Hard (approximately 300 m) routes. Longer routes include physical roadblocks, cones and ordered checkpoints; route difficulty is independent from vehicle pace.</p>
+<p><strong>Build an objective chain</strong> replaces the fixed goal with one to eight ordered steps:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Player action</th>
+<th>Configuration</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Reach</td>
+<td>Enter a marked area</td>
+<td>Optional objective wording</td>
+</tr>
+<tr>
+<td>Download</td>
+<td>Hold E / Interact beside a terminal</td>
+<td>3–180 seconds; default 8</td>
+</tr>
+<tr>
+<td>Defend</td>
+<td>Stay inside the marked 8 m zone, in sight of its marker</td>
+<td>3–180 seconds; default 60</td>
+</tr>
+<tr>
+<td>Eliminate</td>
+<td>Defeat a selected enemy</td>
+<td>Existing enemy ID</td>
+</tr>
+<tr>
+<td>Survive</td>
+<td>Defeat successive squad waves</td>
+<td>1–3 waves</td>
+</tr>
+<tr>
+<td>Escort</td>
+<td>Bring the companion to the marked point</td>
+<td>Companion appearance and health</td>
+</tr>
+<tr>
+<td>Chase</td>
+<td>Catch the courier vehicle while driving</td>
+<td>Needs vehicle extraction and a ground enemy driver</td>
+</tr>
+<tr>
+<td>Convoy</td>
+<td>Stay close to the convoy until it reaches extraction</td>
+<td>Needs vehicle extraction and a ground enemy driver</td>
+</tr>
+</tbody></table>
+<p>Steps are reorderable. Ara spreads their automatically chosen positions across the map and checks every route after adding terminal geometry. Download and defence progress pause outside their zone. A defence zone counts only from the open ground around its marker: inside the ring but behind a wall is a different block, and the objective note says to step into the open. Once the first assault starts, attackers update on the defender every few seconds and close in from their own sides. Ambush waves reuse the configured squad, with a two-second break and a clear entry bay; a player blocking that bay delays entry. The chase courier flees across its side of the gate: it heads for whichever open lane is furthest from you, turns away when cut off, backs out when it bumps into something and speeds up when you get within 30 m. Escort chains start with the companion following, rather than adding a separate rescue interaction. Extraction follows the completed chain. Cargo and ordered road checkpoints still apply.</p>
+<h2 id="cast-and-combat"><a class="anchor" href="#cast-and-combat" aria-hidden="true">#</a>Cast and combat</h2>
+<p>The hero, each of one to five enemies, and the companion can use presets, imported character settings or complete custom character recipes. Customize the squad together or edit individuals. Body settings, clothing and props come from the character builder; gameplay weapons come from equipment and enemy response.</p>
+<table>
+<thead>
+<tr>
+<th>Equipment / role</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pistol</td>
+<td>12-round magazine; deliberate single shots</td>
+</tr>
+<tr>
+<td>Rifle</td>
+<td>30-round magazine; automatic fire while held</td>
+</tr>
+<tr>
+<td>Guard</td>
+<td>Capture, pistol or rifle response; adjustable health</td>
+</tr>
+<tr>
+<td>Rifleman</td>
+<td>Telegraphs aimed bursts</td>
+</tr>
+<tr>
+<td>Elevated sniper</td>
+<td>One of two measured roof anchors; longer sight/range and a longer warning</td>
+</tr>
+<tr>
+<td>Heavy</td>
+<td>300 default health; suppressing bursts toward last-known cover</td>
+</tr>
+<tr>
+<td>Squad leader</td>
+<td>150 default health; defeating the leader reduces remaining guards’ detection and chase speed, with a brief retreat</td>
+</tr>
+</tbody></table>
+<p>Ammunition is finite or unlimited reserve; unlimited reserve still requires reloading. Optional weapon pickups and objective unlocks start the hero unarmed. Chapter completion can unlock a pistol or rifle; the strongest unlocked firearm carries to later chapters. Combat steps require a starting or findable firearm, avoiding circular objective unlocks.</p>
+<p>Shots use height-aware cover tests and stop at the first living actor. Allies block shots without friendly bullet damage. Grenades use swept flight, visible arcs, bounces and a 2.6-second fuse. Blast exposure checks solid cover; the hero and companion can be hurt by explosions. Defeated actors and their equipped guns remain visible in the world. Bullet impacts produce directional reactions and blood; deaths use Ara’s fall animations. A seated driver slumps instead of falling through the vehicle. Shooting never shakes or redirects the camera.</p>
+<p><strong>X / Melee</strong> punches a nearby, visible target. Approach an unaware enemy from behind while crouched for a silent takedown. Range and line of sight are checked at contact, so attacks cannot pass through walls. Ordinary punches alert nearby guards. <strong>Stealth senses</strong> adds running-footstep investigations and body discovery; Night enables it in manual setup, and JSON uses <code>mission.stealth:true</code>. Leaving it off retains the original pursuit rules. Gunfire, explosions and engines also cause investigations. With stealth senses, patrols can discover bodies, including those left by quiet takedowns. A body is reported once per observer.</p>
+<p>Difficulty (Easy, Normal, Hard) changes incoming damage and visibility. Aggression separately controls each enemy’s detection, pursuit and search behavior. <strong>Leave no trace</strong> fails on detection, shots or explosions; it is unavailable for the fixed Clear goal and pickup extraction.</p>
+<h2 id="vehicles-and-air-support"><a class="anchor" href="#vehicles-and-air-support" aria-hidden="true">#</a>Vehicles and air support</h2>
+<p>A pickup waits from the first frame and stays where it is parked; <strong>Drivable vehicle</strong> swaps it for a sports car, SUV, motorcycle, saloon, muscle car, danfo minibus, van, box truck, keke tricycle, scooter, quad bike or go-kart, each with its own top speed. Cars, vans and trucks are boarded through the driver’s door; the keke, scooter and quad are mounted like the motorcycle. A rescued companion rides in the pickup. The city district’s parked fleet mixes all of these with a city bus. <strong>Moving traffic</strong> (Off, Light or Normal) sends cars, danfos, vans, trucks and yellow taxis around the side streets in the right-hand lane: they slow for corners, queue, stop for people and the player, sound the horn when kept waiting and pull out around stopped vehicles. Moving cars block the player’s car, walkers and gunfire. Local districts have no side streets, so they have no moving traffic. With police on, the patrol chases in a marked police saloon with flashing lights. Approach the driver’s door to board. A rescued companion walks to the opposite door, boards using a fitted passenger performance, and must be seated before driving. Stop before alighting; both occupants can leave and reboard. Actual body size determines cabin clearance and entry anchors. Steering keeps full lock for manoeuvring; at speed the wheel turns in more gently and the lock eases off, so fast driving carves steady arcs. Steering, braking, reverse, walls, props and people use a swept vehicle hull.</p>
+<p>Armed drivers can aim, fire and reload while driving. Studio’s mounted weapon layer preserves the seat, feet and control hand. The reachable aim cone is ±110° horizontally and -45° to +60° vertically; the shot uses the same clamped direction. Boarding/alighting hide firearms. Grenades, jumping and crouching remain unavailable while riding.</p>
+<p><strong>Enemy pickup pursuit</strong> assigns the first non-sniper enemy as the truck’s driver. That actor retains their health and weapon. The truck is visible from the start. A bounded arc planner and the real vehicle motor handle pursuit and reversing; blocked routes stop it rather than passing through geometry or people. Defeating its driver stops the pursuit.</p>
+<p><strong>Helicopter extraction</strong> adds a clear landing area beyond the compound and a waiting aircraft. Complete the mission, bring the companion nearby if applicable, and interact beside the right door. Both characters follow collision-checked ground routes to their own measured doors, including when they arrive together on the same side. The pilot waits for the companion to walk around the fuselage; route length determines the approach allowance. Both then use Studio’s native fitted boarding. A seated countdown allows Interact to alight; otherwise the helicopter lifts off and completes extraction. The player does not manually pilot the aircraft.</p>
+<p><strong>Helicopter overwatch</strong> adds a hovering aircraft, spotlight and directional contact reports. It observes; it does not attack or prevent incoming damage. Add a voiced Overwatch story cue with blank text to speak the live contact report.</p>
+<h2 id="lighting-weather-and-sound"><a class="anchor" href="#lighting-weather-and-sound" aria-hidden="true">#</a>Lighting, weather and sound</h2>
+<p>Atmosphere provides Dawn, Day, Dusk and Night, plus Clear, Rain, Fog and Sandstorm. Night and adverse weather reduce guard visibility. Floodlights have measured solid posts; their lighting reach is shared with perception. A player flashlight reveals nearby terrain and makes the player easier to spot. Close contact and sound still matter at night.</p>
+<p>Choose quiet ambience, automatic ambience, wind, forest/birds, ocean, heavy rain or sandstorm from Studio’s compressed recordings. Automatic ambience uses heavy rain in rain, the sandstorm recording in a sandstorm, wind in fog or the desert, birds at a daytime market, and quiet elsewhere. Combat/movement effects include gunshots, impacts, punches, footsteps and body falls. Pickup engines use the recorded engine loop. Playback is bounded, lazy, pause-aware and respects master mute. Audio failures do not stop gameplay.</p>
+<p>Choose allowed camera views and the starting view. Players switch among permitted views with V, the camera button or the pause menu. Third person and Close follow start directly behind the character near eye height, with a slight 3° downward tilt. Players can lower the tilt to a fully level view. Orbit and Close follow support horizontal rotation and vertical tilt; fixed Overhead/Isometric views retain their intended elevation. Creators can disable rotation or zoom. Background music comes from the same compressed music library as Studio and loops during active play.</p>
+<h2 id="story-text-and-voice"><a class="anchor" href="#story-text-and-voice" aria-hidden="true">#</a>Story, text and voice</h2>
+<p>Atmosphere → <strong>Story &amp; dialogue</strong> accepts a Studio JSON or project ZIP and renders it locally into a portable film, or accepts an MP4/WebM. Films are limited to 60 seconds and 24 MiB after rendering. Films play before/after that chapter in every mode and are skippable. The opening film plays when a mission, race or run first starts; the ending film plays when a mission is won, a race is finished or a run goal is reached. Retries and daily challenges skip the films. A missing or unsupported clip cannot permanently block the game.</p>
+<p>Add up to 24 cues triggered by mission start, a time, an objective number, detection, overwatch, reinforcement arrival, objective completion or extraction. Cues support subtitles, captions and comic speech/thought bubbles following the selected character. Text timers pause with the game. Each cue plays once per run; checkpoint retries can replay later cues. Cues can also use any recorded Studio sound effect.</p>
+<p>Enable <strong>Voice this line</strong> or <strong>Read opening briefing aloud</strong> for native device speech. Device voices vary. <strong>Generate all speech</strong> prepares selected lines with Studio’s on-device speech engine, record speech directly in Play, or attach an audio recording. Choose a voice for each line: two female and two male Ara voices, or Gemini and ElevenLabs voices with your own key (<a href="/TRIKAAL-Character-Studio/docs/keys/">Your own AI and voices</a>). <strong>More voices…</strong> in the voice menu connects one. Prepared speech is stored locally and exported as audio; players do not download speech models. Native speech remains a fallback when a prepared line is unavailable. Generate or attach speech for consistent playback across devices.</p>
+<p>Story media is content-addressed and stored in browser-owned IndexedDB so reloading preserves it. It does not grant access to arbitrary files on a device. JSON contains references; attached files travel in an editable project ZIP and in the independent game ZIP. The importer rejects external media URLs, unsupported paths, oversized files and mismatched asset hashes.</p>
+<h2 id="checkpoints-campaigns-and-replay"><a class="anchor" href="#checkpoints-campaigns-and-replay" aria-hidden="true">#</a>Checkpoints, campaigns and replay</h2>
+<p>Automatic checkpoints save completed goals, defeated targets, collected supplies, ammunition, grenades, cargo and rewards together. Chain checkpoints retain completed steps. Pickup road checkpoints restore safe parked positions and ordered route progress. Retries consume a life, preserve the run’s accumulated time, and provide three seconds of protection. Active ordnance and partial actions are cleared. Checkpoints Off restarts the mission’s objectives.</p>
+<p>Campaigns contain the first chapter plus up to nine more, and each chapter can be a mission, a race or a run. When a chapter finishes, <strong>Next</strong> opens the free-roam city district before the following chapter whenever the campaign has a mission in it, whatever the modes on either side; driving to the city&#39;s marker opens that chapter in its own mode. Cups and run stages with no missions go straight from one chapter to the next. The hero, remaining life budget and strongest unlocked firearm carry forward between missions; chapters can independently choose locations, objectives, casts, atmosphere, music and story. Modes come in any order. A chapter starts from the first chapter&#39;s settings: race and runner settings stay with their own mode, and a mission chapter with a different story leaves the first chapter&#39;s objective steps behind unless it lists its own. Beginning a chapter restores its configured health/ammunition. Reloading resumes the latest unlocked chapter, with prior chapter scores and weapon unlocks. Restart campaign clears campaign progress.</p>
+<p>Completed runs award <strong>No alarms</strong>, <strong>No damage</strong> and <strong>Under par</strong> medals. Default par time is 180 seconds and can be changed. Retry history cannot erase damage or alarms. Medal records persist locally and chapter results carry their awarded medals. Scoring can be Off, Objectives or Action; action scoring additionally rewards defeated enemies.</p>
+<h2 id="controls"><a class="anchor" href="#controls" aria-hidden="true">#</a>Controls</h2>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>WASD / arrows</td>
+<td>Move; vehicle throttle and steering while driving</td>
+</tr>
+<tr>
+<td>Shift / Run</td>
+<td>Sprint; stands up from crouch</td>
+</tr>
+<tr>
+<td>C / Crouch</td>
+<td>Crouch or stand</td>
+</tr>
+<tr>
+<td>X / Melee</td>
+<td>Punch; rear crouched approach enables a silent takedown</td>
+</tr>
+<tr>
+<td>E / Interact</td>
+<td>Use, board, alight, companion wait/follow; hold for downloading</td>
+</tr>
+<tr>
+<td>Space / Jump</td>
+<td>Jump, vault or climb; brake while driving</td>
+</tr>
+<tr>
+<td>Right mouse / Q / Aim</td>
+<td>Aim</td>
+</tr>
+<tr>
+<td>Left mouse / F / Fire</td>
+<td>Fire; hold for automatic rifle fire</td>
+</tr>
+<tr>
+<td>R / Reload</td>
+<td>Reload</td>
+</tr>
+<tr>
+<td>G / Grenades</td>
+<td>Aim a grenade; F/click/Throw releases it</td>
+</tr>
+<tr>
+<td>L / flashlight button</td>
+<td>Toggle flashlight</td>
+</tr>
+<tr>
+<td>V / camera button</td>
+<td>Switch permitted camera view</td>
+</tr>
+<tr>
+<td>Drag / scroll</td>
+<td>Rotate and tilt / zoom, if enabled</td>
+</tr>
+<tr>
+<td>Escape</td>
+<td>Cancel grenade aiming or pause</td>
+</tr>
+</tbody></table>
+<p>Agile movement chooses vaults and climbs from measured heights and safe landings. Parked pickups can be climbed from the hood or rear tailgate, walked across and climbed from the bed onto the roof. Occupied vehicles cannot be climbed. Return to ground level to board. Grounded movement disables jumping/traversal. Crouching lowers actual sight, bullet and blast geometry; it is not invulnerability.</p>
+<h2 id="save-import-and-export"><a class="anchor" href="#save-import-and-export" aria-hidden="true">#</a>Save, import and export</h2>
+<ul>
+<li><p>While a game loads, the briefing card names it from the saved setup: its mode, circuit, course or location, title, briefing and key facts, over a plain backdrop for missions, races or runs. The 3D view appears once the cast is ready, and progress shows under the button.</p>
+</li>
+<li><p><strong>Save setup</strong> writes <code>.ara-play.json</code> without attachments, or <code>.ara-play.zip</code> with local story media. <strong>Open setup</strong> accepts both. It imports character settings separately through Cast. <strong>Start over</strong> clears every setting back to a fresh mission setup after a confirmation; save first to keep the current one.</p>
+</li>
+<li><p><strong>Game links:</strong> a link can open Play with a game loaded. <code>https://ara3dgen.com/play/#game=…</code> carries the game in the link, packed the way builder share links are; <code>https://ara3dgen.com/play/#src=https://…/game.json</code> opens a game file hosted elsewhere, on a host that lets other sites read it, such as GitHub&#39;s raw files or a gist. The game after <code>#</code> stays in the browser and goes through the same checks as an opened file. It plays in place of your saved setup, which stays stored until you apply a change. The <a href="/TRIKAAL-Character-Studio/docs/mcp/">AI assistant tools</a> return these links.</p>
+</li>
+<li><p><strong>Game file format:</strong> <code>.ara-play.json</code> follows the published <a href="https://ara3dgen.com/schemas/play-game.v2.json">game schema</a> (<code>npx ara3d schema game</code> prints it), so editors check game files and suggest values as you type, and AI assistants can write them.</p>
+</li>
+<li><p><strong>Download game ZIP</strong> includes an independent HTML/JavaScript player, exact generated characters, selected textures, recorded sounds/music and story media. It does not run the character generator or require Ara services.</p>
+</li>
+<li><p><strong>Publish online</strong> puts the game on the web for free on Cloudflare, with no sign-up to start. Accept Cloudflare&#39;s terms, and the dialog shows each step: checking the game, packing it, a short security puzzle solved in the browser, creating a temporary Cloudflare account, uploading and going live. It ends with the game&#39;s link and a 60-minute countdown to <strong>Claim it on Cloudflare</strong>: signing in or creating a free Cloudflare account moves the game there for good. Unclaimed games are deleted. Anyone with the claim link can take the game, so keep it private. <a href="/TRIKAAL-Character-Studio/docs/hosting-games/">Hosting your game</a> explains the limits of this free hosting and other places to host a downloaded game.</p>
+</li>
+<li><p>Published games contain only the game&#39;s own files and run on a fixed server script with a small <strong>Report this game</strong> link. Games with 18+ characters, meaning underwear off, nothing on the bottom half or a woman with nothing on top, in any chapter, can be downloaded but not published. Studio films with such characters cannot be attached to games. A published game holds up to 1,000 files and 200 MB, and films over about 4.5 MB are stored in parts that play as one file.</p>
+</li>
+<li><p><strong>Customize</strong>, beside Publish online, edits the whole game at once: its <strong>Name</strong> (in the title bar, the browser tab and the published address; it starts as the first chapter&#39;s title), <strong>How to play</strong> (shown when players open How to play; it starts as a short guide for the modes the game uses) and <strong>Colours</strong> (the accent, background and text of the game screens, from eight presets or set one by one; text must stay readable on the background). A field left at its default keeps following the game. In a game file these are the top-level <code>gameName</code>, <code>howToPlay</code> and <code>theme</code>.</p>
+</li>
+<li><p><code>locations.json</code> contains the selected base map contracts; <code>staging.json</code> contains each configured mission’s measured solids, actor starts, objectives, paths, floodlights and extraction area.</p>
+</li>
+<li><p>Unzip and serve the folder with a static host or the local HTTP instructions in its README. Browser module/media rules require HTTP rather than opening <code>index.html</code> through <code>file://</code>.</p>
+</li>
+<li><p>Game preparation validates every chapter and its fitted vehicle/aircraft clearance before replacing the current preview. Failure preserves the working game.</p>
+</li>
+</ul>
+<p>With your own AI key, LLM Assist writes the game in Play, and <strong>Ask Ara</strong> (bottom right, hidden while a game is being played or in full screen) builds games from a chat, with Undo. LLM Assist’s generated guide enumerates the live capabilities, exact library IDs, custom character schema, media rules and measured maps. Its parser uses the same project and staging rules as manual setup. <strong>Check placements</strong> downloads a per-chapter JSON report with objective coordinates, routes, and specific placement errors. No API key, arbitrary script execution or arbitrary coordinate editor is included.</p>
+<h2 id="verification-and-code"><a class="anchor" href="#verification-and-code" aria-hidden="true">#</a>Verification and code</h2>
+<p><code>npm run test:play</code> covers mission migration, navigation, traversal, independent enemy AI, checkpoints, combat, grenades, extraction, progression, campaigns, maps, chains, stealth/melee, specialist roles, aircraft, pursuit, story validation and the LLM contract. <code>scripts/play-arcade-check.ts</code> (part of <code>npm run test:play</code>) covers mode parsing, custom circuits, full AI races on every circuit, walls, respawn, ghosts and their links, runner course generation, chasers, revives, goals, objects to find, medals and character moments. <code>npm run test:play:browser -- --arcade</code> plays a race cup to its podium, a runner to its results and shop, checks phone layouts, exports a race game and switches back to a mission. <code>npm run test:play:poses</code> audits actual generated rigs, supported contacts, upright recovery, hit reactions and bone lengths, including rifle and mounted aim across body sizes. Same-side aircraft approach checks cover every map, four headings, touching occupants, two capsule sizes and reboarding.</p>
+<p>The <code>--boarding-ui</code> browser check covers shared helicopter approach and persistent mission context across all settings tabs at desktop, phone and landscape sizes. Focused browser checks include <code>npm run test:play:browser -- --expansion</code> and <code>--expansion-export</code> for the new workflow, film attachment and independent ZIP. Existing <code>--access</code>, <code>--cover</code>, <code>--combat</code>, <code>--campaign</code>, <code>--campaign-export</code>, <code>--driving-export</code>, <code>--assist</code> and other flags cover the established gameplay and editor. Chrome checks write ignored screenshots and test downloads to <code>out/play/</code>. <code>ARA_TEST_NATIVE_GPU=1</code> selects the Mac graphics backend; the default uses SwiftShader.</p>
+<p><code>runtime.ts</code> owns fixed-step gameplay. <code>mission.ts</code>, <code>locations.ts</code>, <code>staging.ts</code> and <code>objectives.ts</code> own measured staging. <code>enemy-ai.ts</code>, <code>enemy-roles.ts</code>, <code>weapons.ts</code> and <code>combat.ts</code> own perception and combat. <code>driving.ts</code>, <code>pursuit.ts</code>, <code>air.ts</code> and their views reuse fitted Ara vehicles. <code>actor.ts</code> and combat/traversal/stance performance helpers reuse Ara’s existing rigs and clips. <code>story.ts</code>, <code>story-view.ts</code>, <code>media.ts</code> and <code>project-bundle.ts</code> own portable story delivery. <code>player.ts</code> is shared by creator preview and the independent game player. <code>arcade/</code> holds the race and runner modes: <code>modes.ts</code> (settings), <code>track.ts</code>, <code>race.ts</code> and <code>race-view.ts</code>, <code>runner.ts</code> and <code>runner-view.ts</code>, <code>objects.ts</code> and <code>runner-objects.ts</code> (objects to find and their models), <code>market.ts</code> (market street shapes), <code>medals.ts</code>, and the shared <code>player.ts</code>, <code>hud.ts</code>, <code>input.ts</code>, <code>feel.ts</code>, <code>sfx.ts</code>, <code>records.ts</code> and <code>editor.ts</code>.</p>
+
+    <div class="foot"><a href="https://github.com/olatunde85/3d-gen/blob/main/docs/play.md">Edit this page on GitHub</a><a href="https://github.com/olatunde85/3d-gen/discussions">Ask a question</a></div>
+  </article>
+</div>
+<script>(() => {
+  const box = document.getElementById('docs-search'), list = document.getElementById('docs-results');
+  let index, results = [], active = 0;
+  const load = () => index ??= fetch('/TRIKAAL-Character-Studio/docs/search.json').then((r) => r.json()).then((all) => all.map((e) => ({ ...e, lh: e.h.toLowerCase(), lp: e.p.toLowerCase(), lt: e.t.toLowerCase() })));
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const mark = (s, words) => esc(s).replace(new RegExp('(' + words.map((w) => esc(w).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'gi'), '<mark>$1</mark>');
+  function excerpt(e, words) {
+    const at = Math.max(0, Math.min(...words.map((w) => { const i = e.lt.indexOf(w); return i < 0 ? Infinity : i; })));
+    if (!isFinite(at)) return e.t.slice(0, 120);
+    const from = Math.max(0, e.t.lastIndexOf(' ', at - 40) + 1);
+    return (from ? '… ' : '') + e.t.slice(from, from + 140) + (from + 140 < e.t.length ? ' …' : '');
+  }
+  function score(e, words, phrase) {
+    let s = e.lh.includes(phrase) ? 20 : 0;
+    for (const w of words) {
+      const h = e.lh.includes(w), p = e.lp.includes(w), t = e.lt.includes(w);
+      if (!h && !p && !t) return 0;
+      s += (h ? 8 : 0) + (p ? 3 : 0) + (t ? 1 + Math.min(1, (e.lt.split(w).length - 2) * 0.25) : 0);
+    }
+    return s;
+  }
+  function show() {
+    list.hidden = !box.value.trim();box.setAttribute('aria-expanded', String(!list.hidden));
+    list.innerHTML = results.length ? results.map((r, i) => '<a role="option" href="' + r.e.u + '" aria-selected="' + (i === active) + '"><b>' + mark(r.e.h, r.words) + '</b>' + (r.e.h !== r.e.p ? '<small>' + esc(r.e.p) + '</small>' : '') + '<span>' + mark(r.x, r.words) + '</span></a>').join('')
+      : '<p>No results for “' + esc(box.value.trim()) + '”.</p>';
+  }
+  async function search() {
+    const query = box.value.trim().toLowerCase(), words = query.split(/\s+/).filter(Boolean);
+    if (!words.length) { results = [];show();return; }
+    const all = await load();
+    if (box.value.trim().toLowerCase() !== query) return;
+    results = all.map((e) => ({ e, s: score(e, words, query), words })).filter((r) => r.s).sort((a, b) => b.s - a.s).slice(0, 8).map((r) => ({ ...r, x: excerpt(r.e, words) }));
+    active = 0;show();
+  }
+  box.addEventListener('input', search);
+  box.addEventListener('focus', () => { load();if (box.value.trim()) search(); });
+  box.addEventListener('keydown', (ev) => {
+    if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') { ev.preventDefault();if (results.length) { active = (active + (ev.key === 'ArrowDown' ? 1 : results.length - 1)) % results.length;show();list.children[active]?.scrollIntoView({ block: 'nearest' }); } }
+    else if (ev.key === 'Enter' && results[active]) { ev.preventDefault();location.href = results[active].e.u;list.hidden = true; }
+    else if (ev.key === 'Escape') { box.value = '';results = [];show();box.blur(); }
+  });
+  // Clicking a result works before the box loses focus; clicking elsewhere closes the list.
+  list.addEventListener('mousedown', (ev) => ev.preventDefault());
+  list.addEventListener('click', () => { list.hidden = true;box.blur(); });
+  box.addEventListener('blur', () => { list.hidden = true;box.setAttribute('aria-expanded', 'false'); });
+  document.addEventListener('keydown', (ev) => {
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName ?? '') || document.activeElement?.isContentEditable;
+    if (ev.key === '/' && !typing && !ev.metaKey && !ev.ctrlKey) { ev.preventDefault();box.focus(); }
+  });
+})();</script>
+</body>
+</html>
