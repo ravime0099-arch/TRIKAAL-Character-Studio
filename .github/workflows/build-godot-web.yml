@@ -20,11 +20,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Install tools
         run: sudo apt-get update && sudo apt-get install -y unzip
-      - name: Download Hindi UI font
-        run: |
-          mkdir -p godot-game/fonts
-          curl -L --fail --retry 3 -o godot-game/fonts/NotoSansDevanagari.ttf 'https://raw.githubusercontent.com/google/fonts/main/ofl/notosansdevanagari/NotoSansDevanagari%5Bwght%5D.ttf'
-          test -s godot-game/fonts/NotoSansDevanagari.ttf
       - name: Download Godot 4.7.2
         run: |
           curl -L --fail --retry 3 -o godot.zip https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip
